@@ -1,8 +1,9 @@
 .page {
   background-color: #000000;
   color: white;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  min-width: 320px;
 }
 
 .page__content {
@@ -16,4 +17,14 @@
   width: 100%;
   position: relative;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 480px) {
+  .page {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+  }
 }

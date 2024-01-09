@@ -49,7 +49,7 @@
 }
 
 .profile__add-button {
-  background: transparent url(../images/AddButton.svg) center no-repeat;
+  background: transparent url(../images/add-button-plus.png) center no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
@@ -81,7 +81,7 @@
   }
 
   .profile__add-button {
-    background: transparent url(../images/AddButton.svg) center no-repeat;
+    background: transparent url(../images/add-button-plus.png) center no-repeat;
     width: 50px;
     height: 50px;
     margin-left: auto;
@@ -133,11 +133,24 @@
   }
 
   .profile__add-button {
+    background: transparent url(../images/add-button-plus.png) center no-repeat;
     padding: 0;
     margin-top: 36px;
     margin-left: 0px;
     width: 282px;
     height: 50px;
     border: 2px solid rgba(255, 255, 255, 1);
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .profile {
+    padding-top: 0;
+  }
+
+  .profile__avatar {
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: 42px;
   }
 }

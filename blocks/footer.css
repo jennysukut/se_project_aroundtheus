@@ -11,3 +11,15 @@
   color: #545454;
   margin: 0;
 }
+
+@media screen and (max-width: 620px) {
+  .footer__text {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 2px;
+    color: #545454;
+    margin-top: 48px;
+    margin-bottom: 36px;
+  }
+}
