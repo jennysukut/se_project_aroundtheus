@@ -19,14 +19,14 @@
     "title button"
     "description description";
   grid-template-columns: minmax(auto, 373px) auto;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", Arial, Sans-serif;
   padding-right: 20px;
 }
 
 .profile__title {
   font-size: 42px;
   font-weight: 500;
-  line-height: 48px;
+  line-height: 1.1;
   grid-area: title;
   margin: 0;
 }
@@ -34,7 +34,7 @@
 .profile__description {
   grid-area: description;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 1.2;
   font-weight: 400;
   margin: 0;
 }
@@ -45,15 +45,23 @@
   width: 24px;
   grid-area: button;
   margin-top: 15px;
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid #fff;
+}
+
+.profile__edit-button:hover {
+  opacity: 50%;
 }
 
 .profile__add-button {
-  background: transparent url(../images/add-button-plus.png) center no-repeat;
+  background: transparent url(../images/PlusButtonSVG.svg) center no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
-  border: 2px solid rgba(255, 255, 255, 1);
+  border: 2px solid #fff;
+}
+
+.profile__add-button:hover {
+  opacity: 50%;
 }
 
 @media screen and (max-width: 750px) {
@@ -81,11 +89,15 @@
   }
 
   .profile__add-button {
-    background: transparent url(../images/add-button-plus.png) center no-repeat;
+    background: transparent url(../images/PlusButtonSVG.svg) center no-repeat;
     width: 50px;
     height: 50px;
     margin-left: auto;
-    border: 2px solid rgba(255, 255, 255, 1);
+    border: 2px solid #fff;
+  }
+
+  .profile__add-button:hover {
+    opacity: 50%;
   }
 }
 
@@ -132,14 +144,22 @@
     width: 18px;
   }
 
+  .profile__edit-button:hover {
+    opacity: 50%;
+  }
+
   .profile__add-button {
-    background: transparent url(../images/add-button-plus.png) center no-repeat;
+    background: transparent url(../images/PlusButtonSVG.svg) center no-repeat;
     padding: 0;
     margin-top: 36px;
     margin-left: 0px;
     width: 282px;
     height: 50px;
-    border: 2px solid rgba(255, 255, 255, 1);
+    border: 2px solid #fff;
+  }
+
+  .profile__add-button:hover {
+    opacity: 50%;
   }
 }
 

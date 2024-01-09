@@ -1,9 +1,9 @@
 .cards {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", Arial, Sans-serif;
   font-weight: 900;
   color: #000000;
   font-size: 24px;
-  line-height: 29px;
+  line-height: 1.1px;
   margin-top: 50px;
 }
 
@@ -21,8 +21,11 @@
   list-style-type: none;
   width: 282px;
   height: 361px;
-  border-radius: 3%;
   overflow: hidden;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .card__image {
@@ -42,11 +45,11 @@
 }
 
 .card__description {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", "Arial", sans-serif;
   font-weight: 900;
   color: #000000;
   font-size: 24px;
-  line-height: 29px;
+  line-height: 1.2;
   align-self: center;
 }
 
@@ -63,4 +66,8 @@
   height: 18px;
   border: none;
   align-self: center;
+}
+
+.card__like-button:hover {
+  opacity: 50%;
 }

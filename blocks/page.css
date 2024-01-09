@@ -1,9 +1,10 @@
 .page {
   background-color: #000000;
-  color: white;
-  padding-left: 15px;
-  padding-right: 15px;
+  color: #fff;
+  padding-left: 3vw;
+  padding-right: 3vw;
   min-width: 320px;
+  font-family: "Inter", Arial, Sans-serif;
 }
 
 .page__content {
