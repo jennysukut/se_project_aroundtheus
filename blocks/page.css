@@ -1,6 +1,8 @@
 .page {
   background-color: #000000;
   color: white;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .page__content {
