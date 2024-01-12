@@ -17,7 +17,8 @@ This project was designed in Figma and photos, sizes, and grahic elements were a
 
 **Images or Screenshots**
 
-Here's the design at it's designed width of 1280px.
+Here's the design at it's designed width of 1280px:
+
 ![Page at width 1280px](Screenshot1280.png)
 
 **Github Link**
