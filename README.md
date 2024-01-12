@@ -17,15 +17,10 @@ This project was designed in Figma and photos, sizes, and grahic elements were a
 
 **Images or Screenshots**
 
-![Alt text](SiteScreenshot.png)
+![Page at width 1280px](Screenshot1280.png)
+
+![Page at width 570px](Screenshot750.png) ![Page at width 320px](<Screenshot 320.png>)
 
 **Github Link**
 
-Don't forget to optimize them [here](https://tinypng.com/)
-
-1. The project's name
-2. A description of the project and its functionality
-3. A description of the technologies and techniques used
-4. Pictures, GIFs, or screenshots that detail the project features (highly
-   recommended)
-5. The link to GitHub Pages
+You can find the project's original Github [here](https://github.com/tripleten-com/se_project_aroundtheus)
