@@ -5,7 +5,7 @@
 - Intro
 - Technologies & Techniques Used
 - Images or Screenshots
-- Github Link
+- Github & Video Walkthrough Link
 
 **Intro**
 
@@ -21,6 +21,7 @@ Here's the design at it's designed width of 1280px:
 
 ![Page at width 1280px](Screenshot1280.png)
 
-**Github Link**
+**Github & Video Walkthrough Link**
 
 You can find the project's original Github [here](https://github.com/tripleten-com/se_project_aroundtheus)
+My short video walkthrough of the project can be found [here](https://drive.google.com/file/d/18dOw6zqJgJcEtu1HhnrUFRoM7ClVbFVr/view?usp=sharing)
