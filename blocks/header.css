@@ -1,11 +1,11 @@
 .header {
   background-color: #000000;
-  height: 74px;
-  border-bottom: 1px solid #545454;
+  border-bottom: 1px solid rgba(84, 84, 84, 1);
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   margin-top: 45px;
+  padding-bottom: 41px;
 }
 
 .header__logo {
@@ -15,19 +15,13 @@
 
 @media screen and (max-width: 480px) {
   .header {
-    background-color: #000000;
-    height: 56px;
-    border-bottom: 1px solid #545454;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
     margin-top: 28px;
+    padding-bottom: 32px;
   }
 
   .header__logo {
     max-width: 126px;
     max-height: 24px;
     margin-left: 27px;
-    margin-bottom: 32px;
   }
 }

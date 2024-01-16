@@ -24,4 +24,7 @@ Here's the design at it's designed width of 1280px:
 **Github & Video Walkthrough Link**
 
 You can find the project's original Github [here](https://github.com/tripleten-com/se_project_aroundtheus)
+
+My published Github Page is [here](https://jennysukut.github.io/se_project_aroundtheus/)
+
 My short video walkthrough of the project can be found [here](https://drive.google.com/file/d/18dOw6zqJgJcEtu1HhnrUFRoM7ClVbFVr/view?usp=sharing)
