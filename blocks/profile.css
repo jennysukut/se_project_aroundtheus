@@ -55,6 +55,7 @@
   border: 1px solid #fff;
   border-radius: 1px;
   transition: opacity 0.2s linear;
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {
@@ -79,13 +80,12 @@
 @media screen and (max-width: 750px) {
   .profile__title {
     font-size: 28px;
-    line-height: 2;
   }
 
   .profile__description {
     font-size: 16px;
-    line-height: 2;
   }
+
   .profile__info {
     grid-template-columns: minmax(auto, 265px) auto;
   }
@@ -111,12 +111,11 @@
   .profile__info {
     padding-right: 0;
     grid-template-columns: auto;
-    grid-gap: 0px 10px;
+    grid-gap: 14px 10px;
   }
 
   .profile__title {
     font-size: 22px;
-    line-height: 2;
     text-align: center;
   }
 
@@ -157,7 +156,7 @@
   }
 
   .profile__edit-button {
-    margin-top: 12px;
+    margin: 0;
     background-size: 7.5px;
   }
 
