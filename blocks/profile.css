@@ -112,6 +112,7 @@
     padding-right: 0;
     grid-template-columns: auto;
     grid-gap: 14px 10px;
+    align-items: center;
   }
 
   .profile__title {
