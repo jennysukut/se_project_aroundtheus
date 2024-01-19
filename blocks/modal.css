@@ -32,6 +32,11 @@
   right: -45px;
   padding: 0;
   cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.modal__close-button:hover {
+  opacity: 50%;
 }
 
 .modal__heading {
@@ -83,8 +88,9 @@
   height: 50px;
   transition: opacity 0.2s linear;
   padding: 0;
+  cursor: pointer;
 }
 
 .modal__button:hover {
-  opacity: 50%;
+  opacity: 0.8;
 }
