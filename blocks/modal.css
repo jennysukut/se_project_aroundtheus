@@ -23,6 +23,7 @@
 
 .modal__close-button {
   background: transparent url(../images/CloseIcon.svg) center no-repeat;
+  background-size: contain;
   height: 40px;
   width: 40px;
   border: none;
@@ -91,4 +92,39 @@
 
 .modal__button:hover {
   opacity: 0.8;
+}
+
+@media screen and (max-width: 620px) {
+  .modal__container {
+    padding: 25px 22px;
+  }
+
+  .modal__form {
+    margin-top: 76px;
+    width: 238px;
+  }
+
+  .modal__heading {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .modal__button {
+    margin-top: 46px;
+  }
+  .modal__close-button {
+    max-width: 26px;
+    max-height: 26px;
+    top: -58px;
+    right: 0;
+  }
+
+  .modal__form-input {
+    padding-bottom: 9px;
+  }
+
+  .modal__button {
+    font-size: 14px;
+    height: 46px;
+  }
 }
