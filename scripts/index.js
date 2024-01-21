@@ -24,3 +24,15 @@ const initialCards = [
     link: "https://unsplash.com/photos/aerial-view-of-city-during-daytime-VmIkAvcCdPo",
   },
 ];
+
+const editProfileButton = document.querySelector("#profile-edit-button");
+const modalCloseButton = document.querySelector("#modal-close-button");
+const profileEditModal = document.querySelector("#profile-edit-modal");
+
+editProfileButton.addEventListener("click", () => {
+  profileEditModal.classList.add("modal_opened");
+});
+
+modalCloseButton.addEventListener("click", () => {
+  profileEditModal.classList.remove("modal_opened");
+});
