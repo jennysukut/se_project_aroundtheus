@@ -33,13 +33,15 @@
             class="profile__avatar"
           />
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
             <button
               class="profile__edit-button"
               type="button"
               id="profile-edit-button"
             ></button>
-            <p class="profile__description">Explorer</p>
+            <p class="profile__description" id="profile-description">
+              Explorer
+            </p>
           </div>
           <button class="profile__add-button" type="button"></button>
         </section>
@@ -129,14 +131,14 @@
             <input
               type="text"
               class="modal__form-input"
-              id="title"
-              placeholder="Jacques Cousteau"
+              id="edit-profile-modal-title"
+              placeholder="Name"
             />
             <input
               type="text"
               class="modal__form-input"
-              id="description"
-              placeholder="Explorer"
+              id="edit-profile-modal-description"
+              placeholder="Description"
             />
             <button class="modal__button">Save</button>
           </fieldset>
