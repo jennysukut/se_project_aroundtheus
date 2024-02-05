@@ -66,6 +66,8 @@ const addCardModalLink = document.querySelector("#add-card-modal-link");
 const cardTitleInput = addCardModal.querySelector("#add-card-modal-title");
 const cardLinkInput = addCardModal.querySelector("#add-card-modal-link");
 
+const cardDeleteButton = document.querySelectorAll("#card-delete-button");
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
   │ FUNCTIONS;                                                              │
@@ -131,6 +133,10 @@ addCardForm.addEventListener("submit", addCardFormSubmit);
 closeAddCardButton.addEventListener("click", () => {
   addCardModal.classList.remove("modal_opened");
 });
+
+/*cardDeleteButton.addEventListener("click", () => {
+  console.log("Card Delete Button Pressed");
+});*/
 
 /* 
   ┌────────────────────────────────────────────────────────────────────────────┐
