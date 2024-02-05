@@ -54,5 +54,21 @@
 }
 
 .card__like-button-active {
-  background: transparent url(../);
+  background: transparent url(../images/LikeButtonActive.png) center;
+}
+
+.card__delete-button {
+  background: transparent url(../images/TrashcanIcon.svg) center no-repeat;
+  width: 18px;
+  height: 19.3px;
+  border: none;
+  position: relative;
+  z-index: 10;
+  bottom: 265px;
+  left: 249px;
+  transition: opacity 0.2s linear;
+}
+
+.card__delete-button:hover {
+  opacity: 50%;
 }

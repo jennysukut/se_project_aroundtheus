@@ -120,7 +120,14 @@
 
     <template id="cards-template">
       <li class="card">
-        <img src="" alt="" id="card-image" class="card__image" />
+        <div class="card__image">
+          <img src="" alt="" id="card-image" class="card__image" />
+          <button
+            class="card__delete-button"
+            type="button"
+            id="card-delete-button"
+          ></button>
+        </div>
         <div class="card__details">
           <h2 class="card__description" id="card-title"></h2>
           <button

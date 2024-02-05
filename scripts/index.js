@@ -66,8 +66,6 @@ const addCardModalLink = document.querySelector("#add-card-modal-link");
 const cardTitleInput = addCardModal.querySelector("#add-card-modal-title");
 const cardLinkInput = addCardModal.querySelector("#add-card-modal-link");
 
-const cardLikeButton = document.querySelector("#card-like-button");
-
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
   │ FUNCTIONS;                                                              │
@@ -89,6 +87,7 @@ function getCardElement(cardData) {
   cardTitleEl.textContent = cardData.name;
   cardImageEl.src = cardData.link;
   cardImageEl.alt = cardData.name;
+
   return cardElement;
 }
 
@@ -143,3 +142,12 @@ initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListEl.prepend(cardElement);
 });
+
+//Code for the like button, not currently working and removing rest of cards when implemented.
+
+/*const cardLikeButton = document.querySelectorAll(".card__like-button");
+
+cardLikeButton.addEventListener("click", () => {
+  cardLikeButton.classList.toggle(".card__like-button-active");
+});
+console.log(cardLikeButton);*/
