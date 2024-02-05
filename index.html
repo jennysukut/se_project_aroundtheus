@@ -43,7 +43,11 @@
               Explorer
             </p>
           </div>
-          <button class="profile__add-button" type="button" id="add-card-button"></button>
+          <button
+            class="profile__add-button"
+            type="button"
+            id="add-card-button"
+          ></button>
         </section>
         <section class="cards page__section">
           <ul class="cards__list" id="cards-list"></ul>
@@ -55,7 +59,10 @@
     </div>
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
-        <button class="modal__close-button" id="modal-close-button"></button>
+        <button
+          class="modal__close-button"
+          id="profile-edit-modal-close-button"
+        ></button>
         <p class="modal__heading">Edit profile</p>
         <form class="modal__form" id="profile-edit-form">
           <fieldset class="modal__form-fieldset">
@@ -79,32 +86,36 @@
           </fieldset>
         </form>
       </div>
-      <div class="modal" id="add-card-modal">
-        <div class="modal__container">
-          <button class="modal__close-button" id="modal-close-button"></button>
-          <p class="modal__heading">New place</p>
-          <form class="modal__form" id="add-card-form">
-            <fieldset class="modal__form-fieldset">
-              <input
-                type="text"
-                class="modal__form-input"
-                id="add-card-modal-title"
-                name="title"
-                placeholder="Title"
-              />
-              <input
-                type="src"
-                class="modal__form-input"
-                id="add-card-modal-link"
-                name="link"
-                placeholder="Image link"
-              />
-              <button class="modal__button" id="add-card-modal-button">
-                Create
-              </button>
-            </fieldset>
-          </form>
-        </div>
+    </div>
+    <div class="modal" id="add-card-modal">
+      <div class="modal__container">
+        <button
+          class="modal__close-button"
+          id="add-card-modal-close-button"
+        ></button>
+        <p class="modal__heading">New place</p>
+        <form class="modal__form" id="add-card-form">
+          <fieldset class="modal__form-fieldset">
+            <input
+              type="text"
+              class="modal__form-input"
+              id="add-card-modal-title"
+              name="title"
+              placeholder="Title"
+            />
+            <input
+              type="src"
+              class="modal__form-input"
+              id="add-card-modal-link"
+              name="link"
+              placeholder="Image link"
+            />
+            <button class="modal__button" id="add-card-modal-button">
+              Create
+            </button>
+          </fieldset>
+        </form>
+      </div>
     </div>
 
     <template id="cards-template">
@@ -112,7 +123,11 @@
         <img src="" alt="" id="card-image" class="card__image" />
         <div class="card__details">
           <h2 class="card__description" id="card-title"></h2>
-          <button class="card__like-button" type="button"></button>
+          <button
+            class="card__like-button"
+            type="button"
+            id="card-like-button"
+          ></button>
         </div>
       </li>
     </template>
