@@ -43,14 +43,14 @@
               Explorer
             </p>
           </div>
-          <button class="profile__add-button" type="button"></button>
+          <button class="profile__add-button" type="button" id="add-card-button"></button>
         </section>
         <section class="cards page__section">
           <ul class="cards__list" id="cards-list"></ul>
         </section>
       </main>
       <footer class="footer page__section">
-        <p class="footer__text">© 2022 Around The U.S.</p>
+        <p class="footer__text">© 2024 Jennifer Sukut</p>
       </footer>
     </div>
     <div class="modal" id="profile-edit-modal">
@@ -63,12 +63,14 @@
               type="text"
               class="modal__form-input"
               id="edit-profile-modal-title"
+              name="name"
               placeholder="Name"
             />
             <input
               type="text"
               class="modal__form-input"
               id="edit-profile-modal-description"
+              name="description"
               placeholder="Description"
             />
             <button class="modal__button" id="edit-profile-modal-save-button">
@@ -77,6 +79,32 @@
           </fieldset>
         </form>
       </div>
+      <div class="modal" id="add-card-modal">
+        <div class="modal__container">
+          <button class="modal__close-button" id="modal-close-button"></button>
+          <p class="modal__heading">New place</p>
+          <form class="modal__form" id="add-card-form">
+            <fieldset class="modal__form-fieldset">
+              <input
+                type="text"
+                class="modal__form-input"
+                id="add-card-modal-title"
+                name="title"
+                placeholder="Title"
+              />
+              <input
+                type="src"
+                class="modal__form-input"
+                id="add-card-modal-link"
+                name="link"
+                placeholder="Image link"
+              />
+              <button class="modal__button" id="add-card-modal-button">
+                Create
+              </button>
+            </fieldset>
+          </form>
+        </div>
     </div>
 
     <template id="cards-template">

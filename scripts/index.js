@@ -53,6 +53,11 @@ const cardListEl = document.querySelector("#cards-list");
 const cardTemplate =
   document.querySelector("#cards-template").content.firstElementChild;
 
+const addCardButton = document.querySelector(".profile__add-button");
+const addCardModal = document.querySelector("#add-card-modal");
+const addCardForm = document.querySelector("#add-card-form");
+const addCardModalTitle = document.querySelector("#add-card-modal-title");
+const addCardModalLink = document.querySelector("#add-card-modal-link");
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
   │ FUNCTIONS;                                                              │
@@ -94,6 +99,15 @@ profileEditForm.addEventListener("submit", editProfileFormSubmit);
 modalCloseButton.addEventListener("click", () => {
   profileEditModal.classList.remove("modal_opened");
 });
+
+addImageButton.addEventListener("click", () => {
+  console.log("Add Image Button Clicked");
+  addImageModal.classList.add("modal_opened");
+});
+
+/*addImageButton.addEventListener("click", () => {
+  addImageModal.classList.add("modal_opened");
+});*/
 
 /* 
   ┌────────────────────────────────────────────────────────────────────────────┐
