@@ -1,21 +1,24 @@
 .modal {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
+  display: flex;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 500;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: "Inter", "Arial", sans-serif;
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
 }
 
 .modal_opened {
-  display: flex;
+  visibility: visible;
+  opacity: 1;
 }
 
 .modal__container {
@@ -99,9 +102,34 @@
   opacity: 0.8;
 }
 
+.modal__container_image_popup {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.modal__card-image {
+  max-height: 75vh;
+  max-width: 75vw;
+}
+
+.modal__image-description {
+  color: rgba(255, 255, 255, 1);
+  font-size: 12px;
+  font-weight: 400;
+  margin: 10px 0 0;
+  font-family: "Inter", "Arial", sans-serif;
+}
+
 @media screen and (max-width: 620px) {
   .modal__container {
     padding: 25px 22px;
+  }
+
+  .modal__container_image_popup {
+    background: none;
+    padding: 0;
+    border-radius: 0;
   }
 
   .modal__form {

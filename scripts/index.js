@@ -66,8 +66,10 @@ const addCardModalLink = document.querySelector("#add-card-modal-link");
 const cardTitleInput = addCardModal.querySelector("#add-card-modal-title");
 const cardLinkInput = addCardModal.querySelector("#add-card-modal-link");
 
-const cardDeleteButton = document.querySelectorAll("#card-delete-button");
-
+const cardImageModal = document.querySelector("#card-image-modal");
+const closeImageModalButton = document.querySelector(
+  "#card-image-modal-close-button"
+);
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
   │ FUNCTIONS;                                                              │
@@ -90,6 +92,39 @@ function getCardElement(cardData) {
   cardImageEl.src = cardData.link;
   cardImageEl.alt = cardData.name;
 
+  //Like Button
+
+  const cardLikeButton = cardElement.querySelector(".card__like-button");
+
+  cardLikeButton.addEventListener("click", () => {
+    cardLikeButton.classList.toggle("card__like-button-active");
+  });
+
+  //Delete Button
+
+  const cardDeleteButton = cardElement.querySelector("#card-delete-button");
+
+  cardDeleteButton.addEventListener("click", () => {
+    cardElement.remove(cardData);
+  });
+
+  //Image Modal
+  const fullImage = cardImageModal.querySelector("#modal-image");
+  const imageModalDescription = cardImageModal.querySelector(
+    "#card-image-modal-description"
+  );
+
+  cardImageEl.addEventListener("click", () => {
+    cardImageModal.classList.add("modal_opened");
+    fullImage.src = cardImageEl.src;
+    fullImage.alt = cardTitleEl.textContent;
+    imageModalDescription.textContent = cardTitleEl.textContent;
+  });
+
+  closeImageModalButton.addEventListener("click", () => {
+    cardImageModal.classList.remove("modal_opened");
+  });
+
   return cardElement;
 }
 
@@ -101,7 +136,7 @@ function addCardFormSubmit(evt) {
     name,
     link,
   });
-  console.log(cardElement);
+
   cardListEl.prepend(cardElement);
   addCardModal.classList.remove("modal_opened");
 }
@@ -134,10 +169,6 @@ closeAddCardButton.addEventListener("click", () => {
   addCardModal.classList.remove("modal_opened");
 });
 
-/*cardDeleteButton.addEventListener("click", () => {
-  console.log("Card Delete Button Pressed");
-});*/
-
 /* 
   ┌────────────────────────────────────────────────────────────────────────────┐
   │ LOOPS  │                                                                            │
@@ -148,12 +179,3 @@ initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListEl.prepend(cardElement);
 });
-
-//Code for the like button, not currently working and removing rest of cards when implemented.
-
-/*const cardLikeButton = document.querySelectorAll(".card__like-button");
-
-cardLikeButton.addEventListener("click", () => {
-  cardLikeButton.classList.toggle(".card__like-button-active");
-});
-console.log(cardLikeButton);*/
