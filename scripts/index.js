@@ -88,6 +88,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = editProfileModalName.value;
   profileDescription.textContent = editProfileModalDescription.value;
+  closePopup(profileEditModal);
 }
 
 function getCardElement(cardData) {
