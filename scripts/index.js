@@ -138,6 +138,7 @@ function handleCardFormSubmit(evt) {
 
   evt.target.reset();
   cardListEl.prepend(cardElement);
+  closePopup(addCardModal);
 }
 
 /* 
