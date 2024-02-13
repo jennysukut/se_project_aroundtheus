@@ -64,7 +64,7 @@
           id="profile-edit-modal-close-button"
         ></button>
         <p class="modal__heading">Edit profile</p>
-        <form class="modal__form" id="profile-edit-form">
+        <form class="modal__form" id="profile-edit-form" novalidate>
           <fieldset class="modal__form-fieldset">
             <input
               type="text"
@@ -72,14 +72,28 @@
               id="edit-profile-modal-title"
               name="name"
               placeholder="Name"
+              minlength="2"
+              maxlength="40"
+              required
             />
+            <span
+              class="modal__error"
+              id="edit-profile-modal-title-error"
+            ></span>
             <input
               type="text"
               class="modal__form-input"
               id="edit-profile-modal-description"
               name="description"
               placeholder="Description"
+              minlength="2"
+              maxlength="200"
+              required
             />
+            <span
+              class="modal__error"
+              id="edit-profile-modal-description-error"
+            ></span>
             <button class="modal__button" id="edit-profile-modal-save-button">
               Save
             </button>
@@ -102,6 +116,7 @@
               id="add-card-modal-title"
               name="title"
               placeholder="Title"
+              required
             />
             <input
               type="src"
@@ -109,8 +124,13 @@
               id="add-card-modal-link"
               name="link"
               placeholder="Image link"
+              required
             />
-            <button class="modal__button" id="add-card-modal-button">
+            <button
+              class="modal__button modal__button_disabled"
+              id="add-card-modal-button"
+              disabled
+            >
               Create
             </button>
           </fieldset>
@@ -154,5 +174,6 @@
     </template>
 
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validation.js"></script>
   </body>
 </html>

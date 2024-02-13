@@ -80,6 +80,10 @@
   margin-top: 30px;
 }
 
+.modal__form-input:invalid {
+  border-bottom-color: rgba(255, 0, 0, 1);
+}
+
 .modal__form-input::placeholder {
   color: rgba(0, 0, 0, 1);
 }

@@ -49,7 +49,7 @@ const editProfileModalDescription = document.querySelector(
   "#edit-profile-modal-description"
 );
 
-const cardListEl = document.querySelector("#cards-list");
+const cardListElement = document.querySelector("#cards-list");
 const cardTemplate =
   document.querySelector("#cards-template").content.firstElementChild;
 
@@ -94,11 +94,11 @@ function handleProfileFormSubmit(evt) {
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
 
-  const cardTitleEl = cardElement.querySelector("#card-title");
-  const cardImageEl = cardElement.querySelector("#card-image");
-  cardTitleEl.textContent = cardData.name;
-  cardImageEl.src = cardData.link;
-  cardImageEl.alt = cardData.name;
+  const cardTitleElement = cardElement.querySelector("#card-title");
+  const cardImageElement = cardElement.querySelector("#card-image");
+  cardTitleElement.textContent = cardData.name;
+  cardImageElement.src = cardData.link;
+  cardImageElement.alt = cardData.name;
 
   //Like Button
 
@@ -118,11 +118,11 @@ function getCardElement(cardData) {
 
   //Image Modal
 
-  cardImageEl.addEventListener("click", () => {
+  cardImageElement.addEventListener("click", () => {
     openPopup(cardImageModal);
-    fullImage.src = cardImageEl.src;
-    fullImage.alt = cardTitleEl.textContent;
-    imageModalDescription.textContent = cardTitleEl.textContent;
+    fullImage.src = cardImageElement.src;
+    fullImage.alt = cardTitleElement.textContent;
+    imageModalDescription.textContent = cardTitleElement.textContent;
   });
 
   return cardElement;
@@ -138,7 +138,7 @@ function handleCardFormSubmit(evt) {
   });
 
   evt.target.reset();
-  cardListEl.prepend(cardElement);
+  cardListElement.prepend(cardElement);
   closePopup(addCardModal);
 }
 
@@ -170,7 +170,7 @@ addCardForm.addEventListener("submit", handleCardFormSubmit);
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
-  cardListEl.prepend(cardElement);
+  cardListElement.prepend(cardElement);
 });
 
 closeButtons.forEach((button) => {
