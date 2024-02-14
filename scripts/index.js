@@ -78,6 +78,17 @@ const closeButtons = document.querySelectorAll(".modal__close-button");
 
 function openPopup(popup) {
   popup.classList.add("modal_opened");
+  popup.addEventListener("click", (evt) => {
+    if (evt.target === popup) {
+      closePopup(popup);
+    }
+  });
+  document.addEventListener("keydown", function (evt) {
+    const key = evt.key;
+    if (key === "Escape") {
+      closePopup(popup);
+    }
+  });
 }
 
 function closePopup(popup) {
@@ -100,23 +111,17 @@ function getCardElement(cardData) {
   cardImageElement.src = cardData.link;
   cardImageElement.alt = cardData.name;
 
-  //Like Button
-
   const cardLikeButton = cardElement.querySelector(".card__like-button");
 
   cardLikeButton.addEventListener("click", () => {
     cardLikeButton.classList.toggle("card__like-button-active");
   });
 
-  //Delete Button
-
   const cardDeleteButton = cardElement.querySelector("#card-delete-button");
 
   cardDeleteButton.addEventListener("click", () => {
     cardElement.remove(cardData);
   });
-
-  //Image Modal
 
   cardImageElement.addEventListener("click", () => {
     openPopup(cardImageModal);
