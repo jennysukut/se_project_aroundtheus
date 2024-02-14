@@ -116,16 +116,20 @@
               id="add-card-modal-title"
               name="title"
               placeholder="Title"
+              minlength="1"
+              maxlength="30"
               required
             />
+            <span class="modal__error" id="add-card-modal-title-error"></span>
             <input
-              type="src"
+              type="url"
               class="modal__form-input"
               id="add-card-modal-link"
               name="link"
               placeholder="Image link"
               required
             />
+            <span class="modal__error" id="add-card-modal-link-error"></span>
             <button
               class="modal__button modal__button_disabled"
               id="add-card-modal-button"
