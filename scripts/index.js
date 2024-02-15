@@ -40,7 +40,9 @@ const initialCards = [
 const editProfileButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileName = document.querySelector("#profile-title");
-const profileEditForm = document.querySelector("#profile-edit-form");
+//const profileEditForm = document.querySelector("#profile-edit-form");
+const profileEditForm = document.forms["profile-edit-form"];
+
 const profileDescription = document.querySelector("#profile-description");
 const editProfileModalName = document.querySelector(
   "#edit-profile-modal-title"
@@ -55,7 +57,9 @@ const cardTemplate =
 
 const addCardButton = document.querySelector(".profile__add-button");
 const addCardModal = document.querySelector("#add-card-modal");
-const addCardForm = document.querySelector("#add-card-form");
+//const addCardForm = document.querySelector("#add-card-form");
+const addCardForm = document.forms["add-card-form"];
+
 const addCardModalTitle = document.querySelector("#add-card-modal-title");
 const addCardModalLink = document.querySelector("#add-card-modal-link");
 
@@ -120,7 +124,7 @@ function getCardElement(cardData) {
   const cardDeleteButton = cardElement.querySelector("#card-delete-button");
 
   cardDeleteButton.addEventListener("click", () => {
-    cardElement.remove(cardData);
+    cardElement.remove();
   });
 
   cardImageElement.addEventListener("click", () => {
