@@ -80,23 +80,28 @@ const closeButtons = document.querySelectorAll(".modal__close-button");
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
+function handleEscape(evt) {
+  if (key === "Escape") {
+    closePopup(popup);
+  }
+}
+
+function handleClickOut(evt) {
+  if (evt.target === popup) {
+    closePopup(popup);
+  }
+}
+
 function openPopup(popup) {
   popup.classList.add("modal_opened");
-  popup.addEventListener("click", (evt) => {
-    if (evt.target === popup) {
-      closePopup(popup);
-    }
-  });
-  document.addEventListener("keydown", function (evt) {
-    const key = evt.key;
-    if (key === "Escape") {
-      closePopup(popup);
-    }
-  });
+  popup.addEventListener("click", handleClickOut);
+  document.addEventListener("keydown", handleEscape);
 }
 
 function closePopup(popup) {
   popup.classList.remove("modal_opened");
+  document.removeEventListener("keydown", handleEscape);
+  popup.removeEventListener("click", handleClickOut);
 }
 
 function handleProfileFormSubmit(evt) {
