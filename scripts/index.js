@@ -81,19 +81,20 @@ const closeButtons = document.querySelectorAll(".modal__close-button");
  */
 
 function handleEscape(evt) {
-  if (key === "Escape") {
+  if (evt.key === "Escape") {
+    console.log("Event key pressed");
     closePopup(popup);
   }
 }
 
 function handleClickOut(evt) {
-  if (evt.target === popup) {
+  if (evt.target.classList.contains("modal")) {
     closePopup(popup);
   }
 }
 
 function openPopup(popup) {
-  popup.classList.add("modal_opened");
+  popup.classList.add(".modal_opened");
   popup.addEventListener("click", handleClickOut);
   document.addEventListener("keydown", handleEscape);
 }
