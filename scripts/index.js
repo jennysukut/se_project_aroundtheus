@@ -40,7 +40,6 @@ const initialCards = [
 const editProfileButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileName = document.querySelector("#profile-title");
-//const profileEditForm = document.querySelector("#profile-edit-form");
 const profileEditForm = document.forms["profile-edit-form"];
 
 const profileDescription = document.querySelector("#profile-description");
@@ -57,7 +56,6 @@ const cardTemplate =
 
 const addCardButton = document.querySelector(".profile__add-button");
 const addCardModal = document.querySelector("#add-card-modal");
-//const addCardForm = document.querySelector("#add-card-form");
 const addCardForm = document.forms["add-card-form"];
 
 const addCardModalTitle = document.querySelector("#add-card-modal-title");
@@ -82,19 +80,21 @@ const closeButtons = document.querySelectorAll(".modal__close-button");
 
 function handleEscape(evt) {
   if (evt.key === "Escape") {
-    console.log("Event key pressed");
-    closePopup(popup);
+    console.log("Escape key pressed");
+    document.querySelectorAll(".modal").forEach((modal) => {
+      closePopup(modal);
+    });
   }
 }
 
 function handleClickOut(evt) {
   if (evt.target.classList.contains("modal")) {
-    closePopup(popup);
+    closePopup(evt.target);
   }
 }
 
 function openPopup(popup) {
-  popup.classList.add(".modal_opened");
+  popup.classList.add("modal_opened");
   popup.addEventListener("click", handleClickOut);
   document.addEventListener("keydown", handleEscape);
 }
