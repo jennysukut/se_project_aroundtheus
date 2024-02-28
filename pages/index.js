@@ -5,7 +5,7 @@
  */
 
 import Card from "../components/Card.js";
-import { FormValidator } from "../components/FormValidator.js";
+//import { FormValidator } from "../components/FormValidator.js";
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -94,12 +94,12 @@ const validationSettings = {
   errorClass: "modal__error_visible",
 };
 
-const editFormValidator = new FormValidator(
+/*const editFormValidator = new FormValidator(
   validationSettings,
   profileEditForm
 );
 const addFormValidator = new FormValidator(validationSettings, addCardForm);
-
+*/
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
   │ FUNCTIONS;                                                              │
@@ -140,7 +140,7 @@ function handleProfileFormSubmit(evt) {
   closePopup(profileEditModal);
 }
 
-function getCardElement(cardData) {
+/*function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
 
   const cardTitleElement = cardElement.querySelector("#card-title");
@@ -168,14 +168,16 @@ function getCardElement(cardData) {
     imageModalDescription.textContent = cardTitleElement.textContent;
   });
 
-  /*function handleImageClick() {
-    openPopup(cardImageModal);
-    fullImage.src = cardImageElement.src;
-    fullImage.alt = cardTitleElement.textContent;
-    imageModalDescription.textContent = cardTitleElement.textContent;
-  }??*/
+
 
   return cardElement;
+}*/
+
+function handleImageClick() {
+  openPopup(cardImageModal);
+  fullImage.src = cardImageElement.src;
+  fullImage.alt = cardTitleElement.textContent;
+  imageModalDescription.textContent = cardTitleElement.textContent;
 }
 
 function handleCardFormSubmit(evt) {
@@ -218,15 +220,17 @@ addCardForm.addEventListener("submit", handleCardFormSubmit);
   └────────────────────────────────────────────────────────────────────────────┘
  */
 
-initialCards.forEach((cardData) => {
+/*initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListElement.prepend(cardElement);
-});
+});*/
 
 closeButtons.forEach((button) => {
   const popup = button.closest(".modal");
   button.addEventListener("click", () => closePopup(popup));
 });
 
-const card = new Card(testCardData, cardTemplate);
-//card.generateCard();
+initialCards.forEach((cardData) => {
+  const card = new Card(cardData, cardTemplate, handleImageClick);
+  cardListElement.prepend(card); // I have this prepended as before, but nothing is showing up.
+});
