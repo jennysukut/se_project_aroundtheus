@@ -1,5 +1,14 @@
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
+  │ IMPORTS                                                               │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
+
+import Card from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────┐
   │ ARRAYS                                                                │
   └─────────────────────────────────────────────────────────────────────────┘
  */
@@ -30,6 +39,11 @@ const initialCards = [
     link: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
+
+const testCardData = {
+  name: "Seceda",
+  link: "https://images.unsplash.com/photo-1670443437765-f0239aebf4b0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+};
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -71,6 +85,20 @@ const imageModalDescription = cardImageModal.querySelector(
 );
 
 const closeButtons = document.querySelectorAll(".modal__close-button");
+
+const validationSettings = {
+  inputSelector: ".modal__form-input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
+const editFormValidator = new FormValidator(
+  validationSettings,
+  profileEditForm
+);
+const addFormValidator = new FormValidator(validationSettings, addCardForm);
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -140,6 +168,13 @@ function getCardElement(cardData) {
     imageModalDescription.textContent = cardTitleElement.textContent;
   });
 
+  /*function handleImageClick() {
+    openPopup(cardImageModal);
+    fullImage.src = cardImageElement.src;
+    fullImage.alt = cardTitleElement.textContent;
+    imageModalDescription.textContent = cardTitleElement.textContent;
+  }??*/
+
   return cardElement;
 }
 
@@ -192,3 +227,6 @@ closeButtons.forEach((button) => {
   const popup = button.closest(".modal");
   button.addEventListener("click", () => closePopup(popup));
 });
+
+const card = new Card(testCardData, cardTemplate);
+//card.generateCard();
