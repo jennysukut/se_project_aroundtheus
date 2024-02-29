@@ -40,11 +40,6 @@ const initialCards = [
   },
 ];
 
-const testCardData = {
-  name: "Seceda",
-  link: "https://images.unsplash.com/photo-1670443437765-f0239aebf4b0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-};
-
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
   │ ELEMENTS                                                               │
@@ -173,13 +168,6 @@ function handleProfileFormSubmit(evt) {
   return cardElement;
 }*/
 
-function handleImageClick() {
-  openPopup(cardImageModal);
-  fullImage.src = cardImageElement.src;
-  fullImage.alt = cardTitleElement.textContent;
-  imageModalDescription.textContent = cardTitleElement.textContent;
-}
-
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
   const name = cardTitleInput.value;
@@ -232,5 +220,13 @@ closeButtons.forEach((button) => {
 
 initialCards.forEach((cardData) => {
   const card = new Card(cardData, cardTemplate, handleImageClick);
-  cardListElement.prepend(card); // I have this prepended as before, but nothing is showing up.
+  const cardElement = card.generateCard();
+  cardListElement.append(cardElement);
 });
+
+function handleImageClick(card) {
+  openPopup(cardImageModal);
+  fullImage.src = card._cardImageElement.src;
+  fullImage.alt = card._cardTitleElement.textContent;
+  imageModalDescription.textContent = card._cardTitleElement.textContent;
+}

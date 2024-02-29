@@ -10,7 +10,6 @@ export default class Card {
     );
     this._cardImageElement = this._cardSelector.querySelector("#card-image");
     this._handleImageClick = handleImageClick;
-    this._cardListElement = document.querySelector("#cards-list");
   }
 
   generateCard() {
@@ -23,14 +22,9 @@ export default class Card {
     this._cardImageElement.src = this._link;
     this._cardImageElement.alt = this._name;
 
-    //set event listeners call?
     this._setEventListeners();
 
-    //return card
     return this._cardElement;
-
-    //add card to DOM? -- maybe just do this in the index?
-    //  this._cardListElement.prepend(this._cardElement);
   }
 
   _getTemplate() {
@@ -38,14 +32,21 @@ export default class Card {
   }
 
   _setEventListeners() {
+    console.log("setting event listeners");
+    console.log(this._cardLikeButton);
+    console.log(this._cardDeleteButton);
+    console.log(this._cardElement);
     this._cardLikeButton.addEventListener("click", () => {
-      this._handleLikeButton();
+      console.log("Card Like Button Clicked");
+      _handleLikeButton();
     });
     this._cardDeleteButton.addEventListener("click", () => {
-      this._handleDeleteButton();
+      console.log("Delete Button Clicked");
+      _handleDeleteButton();
     });
     this._cardImageElement.addEventListener("click", () => {
-      this._handleImageClick();
+      console.log("Image clicked");
+      this._handleImageClick(this);
     });
   }
 
