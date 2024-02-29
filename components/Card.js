@@ -3,17 +3,17 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
-    this._cardLikeButton =
-      this._cardSelector.querySelector(".card__like-button");
-    this._cardDeleteButton = this._cardSelector.querySelector(
-      "#card-delete-button"
-    );
-    this._cardImageElement = this._cardSelector.querySelector("#card-image");
     this._handleImageClick = handleImageClick;
   }
 
   generateCard() {
     this._getTemplate();
+
+    this._cardLikeButton =
+      this._cardElement.querySelector(".card__like-button");
+    this._cardDeleteButton = this._cardElement.querySelector(
+      "#card-delete-button"
+    );
 
     this._cardTitleElement = this._cardElement.querySelector("#card-title");
     this._cardImageElement = this._cardElement.querySelector("#card-image");
@@ -28,21 +28,19 @@ export default class Card {
   }
 
   _getTemplate() {
-    this._cardElement = this._cardSelector.cloneNode(true);
+    this._cardElement = document
+      .querySelector(this._cardSelector)
+      .content.firstElementChild.cloneNode(true);
   }
 
   _setEventListeners() {
-    console.log("setting event listeners");
-    console.log(this._cardLikeButton);
-    console.log(this._cardDeleteButton);
-    console.log(this._cardElement);
     this._cardLikeButton.addEventListener("click", () => {
       console.log("Card Like Button Clicked");
-      _handleLikeButton();
+      this._handleLikeButton();
     });
     this._cardDeleteButton.addEventListener("click", () => {
       console.log("Delete Button Clicked");
-      _handleDeleteButton();
+      this._handleDeleteButton();
     });
     this._cardImageElement.addEventListener("click", () => {
       console.log("Image clicked");

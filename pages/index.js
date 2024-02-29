@@ -219,7 +219,7 @@ closeButtons.forEach((button) => {
 });
 
 initialCards.forEach((cardData) => {
-  const card = new Card(cardData, cardTemplate, handleImageClick);
+  const card = new Card(cardData, "#cards-template", handleImageClick);
   const cardElement = card.generateCard();
   cardListElement.append(cardElement);
 });
