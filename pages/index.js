@@ -91,7 +91,9 @@ const editFormValidator = new FormValidator(
   profileEditForm
 );
 editFormValidator.enableValidation();
-//const addFormValidator = new FormValidator(settings, addForm);
+
+const addFormValidator = new FormValidator(validationSettings, addCardForm);
+addFormValidator.enableValidation();
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -135,15 +137,15 @@ function handleProfileFormSubmit(evt) {
 
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  const name = cardTitleInput.value;
-  const link = cardLinkInput.value;
-  const cardElement = getCardElement({
-    name,
-    link,
-  });
+  const data = {
+    name: cardTitleInput.value,
+    link: cardLinkInput.value,
+  };
+  const card = new Card(data, "#cards-template", handleImageClick);
+  const cardElement = card.generateCard();
+  cardListElement.prepend(cardElement);
 
   evt.target.reset();
-  cardListElement.prepend(cardElement);
   closePopup(addCardModal);
 }
 
