@@ -63,9 +63,7 @@ const cardListElement = document.querySelector("#cards-list");
 const addCardButton = document.querySelector(".profile__add-button");
 const addCardModal = document.querySelector("#add-card-modal");
 const addCardForm = document.forms["add-card-form"];
-
-//const addCardModalTitle = document.querySelector("#add-card-modal-title");
-//const addCardModalLink = document.querySelector("#add-card-modal-link");
+a;
 
 const cardTitleInput = addCardModal.querySelector("#add-card-modal-title");
 const cardLinkInput = addCardModal.querySelector("#add-card-modal-link");
@@ -77,6 +75,7 @@ const imageModalDescription = cardImageModal.querySelector(
 );
 
 const closeButtons = document.querySelectorAll(".modal__close-button");
+const modals = document.querySelectorAll(".modal");
 
 const validationSettings = {
   inputSelector: ".modal__form-input",
@@ -103,10 +102,7 @@ addFormValidator.enableValidation();
 
 function handleEscape(evt) {
   if (evt.key === "Escape") {
-    console.log("Escape key pressed");
-    document.querySelectorAll(".modal").forEach((modal) => {
-      closePopup(modal);
-    });
+    modals.forEach(closePopup);
   }
 }
 
@@ -118,6 +114,8 @@ function handleClickOut(evt) {
 
 function openPopup(popup) {
   popup.classList.add("modal_opened");
+  addFormValidator.resetValidation(); //COMBINE THESE
+  editFormValidator.resetValidation();
   popup.addEventListener("click", handleClickOut);
   document.addEventListener("keydown", handleEscape);
 }
@@ -137,6 +135,13 @@ function handleProfileFormSubmit(evt) {
 
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
+  createCard(cardTitleInput, cardLinkInput);
+
+  evt.target.reset();
+  closePopup(addCardModal);
+}
+
+function createCard(cardTitleInput, cardLinkInput) {
   const data = {
     name: cardTitleInput.value,
     link: cardLinkInput.value,
@@ -144,9 +149,6 @@ function handleCardFormSubmit(evt) {
   const card = new Card(data, "#cards-template", handleImageClick);
   const cardElement = card.generateCard();
   cardListElement.prepend(cardElement);
-
-  evt.target.reset();
-  closePopup(addCardModal);
 }
 
 /* 
