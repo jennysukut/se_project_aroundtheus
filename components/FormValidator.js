@@ -14,11 +14,6 @@ export default class FormValidator {
     this._inputElements = [
       ...this._formElement.querySelectorAll(this._inputSelector),
     ];
-
-    this._inputElement = this._formElement.querySelector(this._inputSelector);
-    this._errorMessage = this._formElement.querySelector(
-      `#${this._inputElement.id}-error`
-    );
   }
 
   enableValidation() {
@@ -33,29 +28,31 @@ export default class FormValidator {
 
     this._inputElements.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
-        this._checkInputValidity();
+        this._checkInputValidity(inputElement);
         this._toggleButtonState();
       });
     });
   }
 
-  _checkInputValidity() {
-    if (!this._inputElement.validity.valid) {
-      this._showInputError(this._inputElement);
+  _checkInputValidity(inputElement) {
+    if (!inputElement.validity.valid) {
+      this._showInputError(inputElement);
     } else {
-      this._hideInputError(this._inputElement);
+      this._hideInputError(inputElement);
     }
   }
 
-  _showInputError() {
-    this._inputElement.classList.add(this._inputErrorClass);
-    console.log("there is an error with ${this._inputElement}");
-    this._errorMessage.textContent = this._inputElement.validationMessage;
+  _showInputError(inputElement) {
+    this._errorMessage = document.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.add(this._inputErrorClass);
+    this._errorMessage.textContent = inputElement.validationMessage;
     this._errorMessage.classList.add(this._errorClass);
   }
 
-  _hideInputError() {
-    this._inputElement.classList.remove(this._inputErrorClass);
+  _hideInputError(inputElement) {
+    console.log(inputElement);
+    this._errorMessage = document.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.remove(this._inputErrorClass);
     this._errorMessage.textContent = "";
     this._errorMessage.classList.remove(this._errorClass);
   }
