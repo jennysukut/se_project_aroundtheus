@@ -138,7 +138,7 @@ function handleCardFormSubmit(evt) {
   };
 
   const cardElement = createCard(data);
-  cardListElement.prepend(cardElement);
+  addCard(cardElement);
 
   evt.target.reset();
   closePopup(addCardModal);
@@ -147,6 +147,10 @@ function handleCardFormSubmit(evt) {
 function createCard(data) {
   const cardElement = new Card(data, "#cards-template", handleImageClick);
   return cardElement.generateCard();
+}
+
+function addCard(cardElement) {
+  cardListElement.prepend(cardElement);
 }
 
 /* 
@@ -182,7 +186,7 @@ closeButtons.forEach((button) => {
 
 initialCards.forEach((data) => {
   const cardElement = createCard(data);
-  cardListElement.prepend(cardElement);
+  addCard(cardElement);
 });
 
 function handleImageClick(card) {
