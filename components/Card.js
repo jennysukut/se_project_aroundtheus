@@ -15,12 +15,12 @@ export default class Card {
       "#card-delete-button"
     );
 
-    this._cardTitleElement = this._cardElement.querySelector("#card-title");
-    this._cardImageElement = this._cardElement.querySelector("#card-image");
+    this.cardTitleElement = this._cardElement.querySelector("#card-title");
+    this.cardImageElement = this._cardElement.querySelector("#card-image");
 
-    this._cardTitleElement.textContent = this._name;
-    this._cardImageElement.src = this._link;
-    this._cardImageElement.alt = this._name;
+    this.cardTitleElement.textContent = this._name;
+    this.cardImageElement.src = this._link;
+    this.cardImageElement.alt = this._name;
 
     this._setEventListeners();
 
@@ -40,7 +40,7 @@ export default class Card {
     this._cardDeleteButton.addEventListener("click", () => {
       this._handleDeleteButton();
     });
-    this._cardImageElement.addEventListener("click", () => {
+    this.cardImageElement.addEventListener("click", () => {
       this._handleImageClick(this);
     });
   }

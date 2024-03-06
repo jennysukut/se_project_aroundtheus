@@ -113,8 +113,6 @@ function handleClickOut(evt) {
 
 function openPopup(popup) {
   popup.classList.add("modal_opened");
-  addFormValidator.resetValidation(); //COMBINE THESE
-  editFormValidator.resetValidation();
   popup.addEventListener("click", handleClickOut);
   document.addEventListener("keydown", handleEscape);
 }
@@ -134,20 +132,21 @@ function handleProfileFormSubmit(evt) {
 
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  createCard(cardTitleInput, cardLinkInput);
+  const data = {
+    name: cardTitleInput.value,
+    link: cardLinkInput.value,
+  };
+
+  const cardElement = createCard(data);
+  cardListElement.prepend(cardElement);
 
   evt.target.reset();
   closePopup(addCardModal);
 }
 
-function createCard(cardTitleInput, cardLinkInput) {
-  const data = {
-    name: cardTitleInput.value,
-    link: cardLinkInput.value,
-  };
-  const card = new Card(data, "#cards-template", handleImageClick);
-  const cardElement = card.generateCard();
-  cardListElement.prepend(cardElement);
+function createCard(data) {
+  const cardElement = new Card(data, "#cards-template", handleImageClick);
+  return cardElement.generateCard();
 }
 
 /* 
@@ -181,15 +180,14 @@ closeButtons.forEach((button) => {
   button.addEventListener("click", () => closePopup(popup));
 });
 
-initialCards.forEach((cardData) => {
-  const card = new Card(cardData, "#cards-template", handleImageClick);
-  const cardElement = card.generateCard();
-  cardListElement.append(cardElement);
+initialCards.forEach((data) => {
+  const cardElement = createCard(data);
+  cardListElement.prepend(cardElement);
 });
 
 function handleImageClick(card) {
   openPopup(cardImageModal);
-  fullImage.src = card._cardImageElement.src;
-  fullImage.alt = card._cardTitleElement.textContent;
-  imageModalDescription.textContent = card._cardTitleElement.textContent;
+  fullImage.src = card.cardImageElement.src;
+  fullImage.alt = card.cardTitleElement.textContent;
+  imageModalDescription.textContent = card.cardTitleElement.textContent;
 }
