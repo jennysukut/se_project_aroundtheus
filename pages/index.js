@@ -141,7 +141,7 @@ function handleCardFormSubmit(evt) {
   addCard(cardElement);
 
   evt.target.reset();
-  addFormValidator._toggleButtonState();
+  addFormValidator.toggleButtonState();
   closePopup(addCardModal);
 }
 
