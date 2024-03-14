@@ -40,7 +40,7 @@ const AddCardModal = new PopupWithForm(
       evt.preventDefault();
       console.log("handleFormSubmit has run");
       AddCardModal._getInputValues(); //got the input values - I can do this here or within the PopupWithForm Section. Which would be better?
-
+      console.log("should have run getinputvalues");
       //const cardElement = createCard(data);
       //addCard(cardElement);
       //
