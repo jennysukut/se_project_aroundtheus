@@ -36,18 +36,37 @@ const PreviewModal = new PopupWithImage(selectors.previewModal);
 
 const AddCardModal = new PopupWithForm(
   {
-    handleFormSubmit: (evt) => {
+    handleFormSubmit: (evt, inputValueArray) => {
       evt.preventDefault();
-      console.log("handleFormSubmit has run");
       AddCardModal._getInputValues(); //got the input values - I can do this here or within the PopupWithForm Section. Which would be better?
-      console.log("should have run getinputvalues");
-      //const cardElement = createCard(data);
+      console.log(inputValueArray); // this isn't working right - I passed in the value Array I got in _getinputValues, but it's coming back as undefined
+      console.log(inputValueArray[0]);
+
+      //take values from the array and assign them to name and title properties to put into the card
+      const data = {};
+      data.name = inputValueArray[0];
+      data.link = inputValueArray[1];
+
+      console.log({ data });
+
+      //const addedCardElement = new Card(
+      //  {
+      //    inputValueArray,
+      //    handleImageClick: (imgData) => {
+      //      PreviewModal.open(imgData);
+      //    },
+      //  },
+      //  "#cards-template"
+      //);
+
+      //const cardElement = createCard(data); -- create a card, sending in the data/inputValueArray
       //addCard(cardElement);
       //
 
       evt.target.reset();
       AddFormValidator.toggleButtonState();
       AddCardModal.close(); //opens and closes just fine. Need to make a card from here to add to the cardSection?
+      //return addedCardElement.generateCard();
     },
   },
   selectors.addCardForm

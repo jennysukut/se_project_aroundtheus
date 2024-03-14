@@ -9,10 +9,10 @@ export default class PopupWithForm extends Popup {
 
   _getInputValues() {
     // this has to work for both the edit profile and add card values?
-    console.log("running get input values");
     this._formFields = Array.from(
       this._formElement.querySelectorAll(".modal__form-input")
     );
+
     this._formInput = [];
 
     this._formFields.forEach((input) => {
@@ -23,7 +23,7 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     this._formElement.addEventListener("submit", (evt) => {
-      this._handleFormSubmit(evt);
+      this._handleFormSubmit(evt, this._formInput);
       console.log(this._formInput);
     });
     super.setEventListeners();
