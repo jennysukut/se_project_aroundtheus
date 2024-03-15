@@ -34,43 +34,84 @@ const AddFormValidator = new FormValidator(validationSettings, addCardForm);
 
 const PreviewModal = new PopupWithImage(selectors.previewModal);
 
-const AddCardModal = new PopupWithForm(
+/*const AddCardModal = new PopupWithForm(
   {
-    handleFormSubmit: (evt, inputValueArray) => {
+    handleFormSubmit: (evt) => {
       evt.preventDefault();
-      AddCardModal._getInputValues(); //got the input values - I can do this here or within the PopupWithForm Section. Which would be better?
-      console.log(inputValueArray); // this isn't working right - I passed in the value Array I got in _getinputValues, but it's coming back as undefined
-      console.log(inputValueArray[0]);
+      AddCardModal._getInputValues();
 
-      //take values from the array and assign them to name and title properties to put into the card
-      const data = {};
-      data.name = inputValueArray[0];
-      data.link = inputValueArray[1];
+      console.log(AddCardModal._formValues); //THIS HAS THE VALUES!!
 
-      console.log({ data });
+      const { title: name, link } = AddCardModal._formValues; //correctly destructured!!
+      console.log(name);
+      console.log(link);
 
-      //const addedCardElement = new Card(
-      //  {
-      //    inputValueArray,
-      //    handleImageClick: (imgData) => {
-      //      PreviewModal.open(imgData);
-      //    },
-      //  },
-      //  "#cards-template"
-      //);
+      const data = AddCardModal._formValues;
 
-      //const cardElement = createCard(data); -- create a card, sending in the data/inputValueArray
-      //addCard(cardElement);
-      //
+      const addedCardElement = new Card(
+        {
+          data,
+          handleImageClick: (imgData) => {
+            PreviewModal.open(imgData);
+          },
+        },
+        "#cards-template"
+      );
+
+      //GENERATE THE CARD HERE
+      addedCardElement.generateCard(); //this doesn't work - find the correct action to render the new card
+      //Add card to the DOM
 
       evt.target.reset();
       AddFormValidator.toggleButtonState();
-      AddCardModal.close(); //opens and closes just fine. Need to make a card from here to add to the cardSection?
-      //return addedCardElement.generateCard();
+      AddCardModal.close();
     },
   },
   selectors.addCardForm
 );
+*/
+
+const AddCard = new PopupWithForm(
+  {
+    handleFormSubmit: (evt) => {
+      evt.preventDefault();
+      AddCard._getInputValues();
+
+      const { title: name, link } = AddCard._formValues; //correctly destructured!!
+
+      const data = AddCard._formValues;
+      console.log(data); //working here
+
+      const AddedCard = new Section(
+        {
+          renderer: (data) => {
+            const addedCardElement = new Card(
+              {
+                data,
+                handleImageClick: (imgData) => {
+                  PreviewModal.open(imgData);
+                },
+              },
+              "#cards-template"
+            ); // NEW CARD MADE
+
+            addedCardElement.generateCard(); //THIS IS INSIDE THE SECTION RENDERER
+          },
+        },
+        selectors.cardSection
+      ); //SECTION IS MADE
+
+      AddedCard.renderItems(data); //is this right?
+
+      evt.target.reset();
+      AddFormValidator.toggleButtonState();
+      AddCard.close();
+    },
+  },
+  selectors.addCardForm
+);
+
+///////////////////////////
 
 const CardSection = new Section(
   {
@@ -117,5 +158,5 @@ editProfileButton.addEventListener("click", () => {
 });
 
 addCardButton.addEventListener("click", () => {
-  AddCardModal.open();
+  AddCard.open();
 });

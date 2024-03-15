@@ -8,23 +8,23 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    // this has to work for both the edit profile and add card values?
-    this._formFields = Array.from(
+    this._formInputs = Array.from(
       this._formElement.querySelectorAll(".modal__form-input")
     );
 
-    this._formInput = [];
+    this._formValues = {};
 
-    this._formFields.forEach((input) => {
-      this._formInput.push(input.value);
-      //iterate through this array and add each element to an object/array that I'll return and pass to the submission handler
+    this._formInputs.forEach((input) => {
+      this._formValues[input.name] = input.value;
     });
+
+    return this._formValues;
   }
 
   setEventListeners() {
     this._formElement.addEventListener("submit", (evt) => {
-      this._handleFormSubmit(evt, this._formInput);
-      console.log(this._formInput);
+      this._handleFormSubmit(evt);
+      //console.log(this._formValues);
     });
     super.setEventListeners();
 
