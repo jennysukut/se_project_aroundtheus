@@ -144,7 +144,7 @@ function handleProfileFormSubmit(evt) {
   closePopup(profileEditModal);
 }
 
-function handleCardFormSubmit(evt) {
+/*function handleCardFormSubmit(evt) {
   evt.preventDefault();
   const data = {
     name: cardTitleInput.value,
@@ -157,7 +157,7 @@ function handleCardFormSubmit(evt) {
   evt.target.reset();
   addFormValidator.toggleButtonState();
   closePopup(addCardModal);
-}
+}*/
 
 /*
 function createCard(data) {

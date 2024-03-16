@@ -1,10 +1,13 @@
 import Popup from "./Popup.js";
 
+// The constructor only works if I pass in the function as an object I call by name.
+//It only works for one named function at a time. I've tried passin in the functions without them being inside an object, but it doesn't work.
+//I've also tried using "HandleFormSubmit" as shorthand for whatever type of function I pass into it, but that isn't working either.
 export default class PopupWithForm extends Popup {
-  constructor({ handleAddCardFormSubmit }, popupSelector) {
+  constructor({ handleProfileFormSubmit }, popupSelector) {
     super(popupSelector);
     this._formElement = document.querySelector(popupSelector);
-    this._handleFormSubmit = handleAddCardFormSubmit;
+    this._handleFormSubmit = handleProfileFormSubmit;
   }
 
   _getInputValues() {
@@ -29,6 +32,3 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
   }
 }
-
-//Create an instance of the PopupWithForm class for each popup that contains a form,
-//and call their setEventListeners() method.

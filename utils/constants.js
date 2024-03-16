@@ -30,11 +30,6 @@ export const initialCards = [
   },
 ];
 
-export const testData = {
-  name: "Santorini",
-  link: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-};
-
 /* 
       ┌─────────────────────────────────────────────────────────────────────────┐
       │ ELEMENTS                                                                │
@@ -42,33 +37,10 @@ export const testData = {
      */
 
 export const editProfileButton = document.querySelector("#profile-edit-button");
-export const profileEditModal = document.querySelector("#profile-edit-modal");
-export const profileName = document.querySelector("#profile-title");
 export const profileEditForm = document.forms["profile-edit-form"];
-export const profileDescription = document.querySelector(
-  "#profile-description"
-);
-export const editProfileModalName = document.querySelector(
-  "#edit-profile-modal-title"
-);
-export const editProfileModalDescription = document.querySelector(
-  "#edit-profile-modal-description"
-);
-export const cardListElement = document.querySelector("#cards-list");
 export const addCardButton = document.querySelector(".profile__add-button");
-export const addCardModal = document.querySelector("#add-card-modal");
 export const addCardForm = document.forms["add-card-form"];
-//export const cardTitleInput = addCardModal.querySelector(
-//  "#add-card-modal-title"
-//);
-//export const cardLinkInput = addCardModal.querySelector("#add-card-modal-link");
-export const cardImageModal = document.querySelector("#card-image-modal");
-export const fullImage = cardImageModal.querySelector("#modal-image");
-export const imageModalDescription = cardImageModal.querySelector(
-  "#card-image-modal-description"
-);
-export const closeButtons = document.querySelectorAll(".modal__close-button");
-export const modals = document.querySelectorAll(".modal");
+
 export const validationSettings = {
   inputSelector: ".modal__form-input",
   submitButtonSelector: ".modal__button",
@@ -84,4 +56,7 @@ export const selectors = {
   addCardForm: "#add-card-modal",
   cardTitleInput: "#add-card-modal-title",
   cardLinkInput: "#add-card-modal-link",
+  profileEditForm: "#profile-edit-modal",
+  profileDescription: "#profile-description",
+  profileTitle: "#profile-title",
 };

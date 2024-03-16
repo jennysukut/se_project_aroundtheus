@@ -9,6 +9,7 @@ import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
 import {
   initialCards,
   validationSettings,
@@ -39,7 +40,12 @@ const AddCard = new PopupWithForm(
   selectors.addCardForm
 );
 
-const CardSection = new Section(createCard, selectors.cardSection); // new concise code - does it work?
+const CardSection = new Section(createCard, selectors.cardSection);
+
+const ProfileEdit = new PopupWithForm(
+  { handleProfileFormSubmit },
+  selectors.profileEditForm
+);
 
 /*┌─────────────────────────────────────────────────────────────────────────┐
   │ INITIALIZE INSTANCES                                                    │
@@ -69,15 +75,31 @@ function handleImageClick(imgData) {
   PreviewModal.open(imgData);
 }
 
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+  ProfileEdit._getInputValues();
+  console.log(ProfileEdit._formValues);
+
+  const CurrentUserInfo = new UserInfo(ProfileEdit._formValues);
+  CurrentUserInfo.getUserInfo();
+
+  CurrentUserInfo.setUserInfo(
+    selectors.profileTitle,
+    selectors.profileDescription
+  );
+
+  ProfileEdit.close();
+}
+
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
   AddCard._getInputValues();
 
-  const { title: name, link } = AddCard._formValues; //correctly destructured!!
+  const { title: name, link } = AddCard._formValues;
   const data = AddCard._formValues;
 
   this._cardElement = createCard({ name, link });
-  CardSection.addItem(this._cardElement); //THIS WORKS! Adds the card to the end of the list, I should look at prepending?
+  CardSection.addItem(this._cardElement);
 
   evt.target.reset();
   AddFormValidator.toggleButtonState();
@@ -91,10 +113,7 @@ function handleAddCardFormSubmit(evt) {
 */
 
 editProfileButton.addEventListener("click", () => {
-  // open popup with form here, for editing profile
-  openPopup(profileEditModal);
-  editProfileModalName.value = profileName.textContent;
-  editProfileModalDescription.value = profileDescription.textContent.trim();
+  ProfileEdit.open();
 });
 
 addCardButton.addEventListener("click", () => {
