@@ -36,14 +36,14 @@ const AddFormValidator = new FormValidator(validationSettings, addCardForm);
 const PreviewModal = new PopupWithImage(selectors.previewModal);
 
 const AddCard = new PopupWithForm(
-  { handleAddCardFormSubmit },
+  handleAddCardFormSubmit,
   selectors.addCardForm
 );
 
 const CardSection = new Section(createCard, selectors.cardSection);
 
 const ProfileEdit = new PopupWithForm(
-  { handleProfileFormSubmit },
+  handleProfileFormSubmit,
   selectors.profileEditForm
 );
 
@@ -78,7 +78,6 @@ function handleImageClick(imgData) {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   ProfileEdit._getInputValues();
-  console.log(ProfileEdit._formValues);
 
   const CurrentUserInfo = new UserInfo(ProfileEdit._formValues);
   CurrentUserInfo.getUserInfo();

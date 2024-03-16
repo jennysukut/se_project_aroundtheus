@@ -9,7 +9,6 @@ export default class UserInfo {
       name: this._submittedName,
       description: this._submittedDescription,
     };
-    console.log(this._userInfo.name);
     return this._userInfo;
   }
 
