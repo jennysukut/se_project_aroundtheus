@@ -34,102 +34,12 @@ const AddFormValidator = new FormValidator(validationSettings, addCardForm);
 
 const PreviewModal = new PopupWithImage(selectors.previewModal);
 
-/*const AddCardModal = new PopupWithForm(
-  {
-    handleFormSubmit: (evt) => {
-      evt.preventDefault();
-      AddCardModal._getInputValues();
-
-      console.log(AddCardModal._formValues); //THIS HAS THE VALUES!!
-
-      const { title: name, link } = AddCardModal._formValues; //correctly destructured!!
-      console.log(name);
-      console.log(link);
-
-      const data = AddCardModal._formValues;
-
-      const addedCardElement = new Card(
-        {
-          data,
-          handleImageClick: (imgData) => {
-            PreviewModal.open(imgData);
-          },
-        },
-        "#cards-template"
-      );
-
-      //GENERATE THE CARD HERE
-      addedCardElement.generateCard(); //this doesn't work - find the correct action to render the new card
-      //Add card to the DOM
-
-      evt.target.reset();
-      AddFormValidator.toggleButtonState();
-      AddCardModal.close();
-    },
-  },
-  selectors.addCardForm
-);
-*/
-
 const AddCard = new PopupWithForm(
-  {
-    handleFormSubmit: (evt) => {
-      evt.preventDefault();
-      AddCard._getInputValues();
-
-      const { title: name, link } = AddCard._formValues; //correctly destructured!!
-
-      const data = AddCard._formValues;
-      console.log(data); //working here
-
-      const AddedCard = new Section(
-        {
-          renderer: (data) => {
-            const addedCardElement = new Card(
-              {
-                data,
-                handleImageClick: (imgData) => {
-                  PreviewModal.open(imgData);
-                },
-              },
-              "#cards-template"
-            ); // NEW CARD MADE
-
-            addedCardElement.generateCard(); //THIS IS INSIDE THE SECTION RENDERER
-          },
-        },
-        selectors.cardSection
-      ); //SECTION IS MADE
-
-      AddedCard.renderItems(data); //is this right?
-
-      evt.target.reset();
-      AddFormValidator.toggleButtonState();
-      AddCard.close();
-    },
-  },
+  { handleAddCardFormSubmit },
   selectors.addCardForm
 );
 
-///////////////////////////
-
-const CardSection = new Section(
-  {
-    renderer: (data) => {
-      const cardElement = new Card(
-        {
-          data,
-          handleImageClick: (imgData) => {
-            PreviewModal.open(imgData);
-          },
-        },
-        "#cards-template"
-      );
-      return cardElement.generateCard();
-    },
-  },
-  selectors.cardSection
-);
+const CardSection = new Section(createCard, selectors.cardSection); // new concise code - does it work?
 
 /*┌─────────────────────────────────────────────────────────────────────────┐
   │ INITIALIZE INSTANCES                                                    │
@@ -146,9 +56,39 @@ PreviewModal.setEventListeners();
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
+  │ FUNCTIONS                                                               │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
+
+function createCard(data) {
+  const cardElement = new Card({ data, handleImageClick }, "#cards-template");
+  return cardElement.generateCard();
+}
+
+function handleImageClick(imgData) {
+  PreviewModal.open(imgData);
+}
+
+function handleAddCardFormSubmit(evt) {
+  evt.preventDefault();
+  AddCard._getInputValues();
+
+  const { title: name, link } = AddCard._formValues; //correctly destructured!!
+  const data = AddCard._formValues;
+
+  this._cardElement = createCard({ name, link });
+  CardSection.addItem(this._cardElement); //THIS WORKS! Adds the card to the end of the list, I should look at prepending?
+
+  evt.target.reset();
+  AddFormValidator.toggleButtonState();
+  AddCard.close();
+}
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────│
   │ EVENT LISTENERS                                                         │
   └─────────────────────────────────────────────────────────────────────────┘
-  */
+*/
 
 editProfileButton.addEventListener("click", () => {
   // open popup with form here, for editing profile

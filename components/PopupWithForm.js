@@ -1,10 +1,10 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor({ handleFormSubmit }, popupSelector) {
+  constructor({ handleAddCardFormSubmit }, popupSelector) {
     super(popupSelector);
     this._formElement = document.querySelector(popupSelector);
-    this._handleFormSubmit = handleFormSubmit;
+    this._handleFormSubmit = handleAddCardFormSubmit;
   }
 
   _getInputValues() {
@@ -23,12 +23,10 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     this._formElement.addEventListener("submit", (evt) => {
+      console.log("submit button clicked");
       this._handleFormSubmit(evt);
-      //console.log(this._formValues);
     });
     super.setEventListeners();
-
-    //add a submit event listener to the form and call the setEventListeners() method of the parent class.
   }
 }
 
