@@ -4,6 +4,7 @@
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
+import "./index.css";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -59,6 +60,10 @@ EditFormValidator.enableValidation();
 AddFormValidator.enableValidation();
 
 PreviewModal.setEventListeners();
+
+AddCard.setEventListeners();
+
+ProfileEdit.setEventListeners();
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│

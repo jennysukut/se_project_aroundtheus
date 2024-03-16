@@ -13,14 +13,13 @@
       content="landscapes, scenery, mountains, photo-sharing"
     />
     <meta name="author" content="Jennifer Sukut" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <link rel="shortcut icon" href="./favicon.ico" />
   </head>
   <body class="page">
     <div class="page__content">
       <header class="header page__section">
         <img
-          src="./images/header-images/AroundTheWorldLogo.svg"
+          src="<%=require('./images/header-images/AroundTheWorldLogo.svg')%>"
           alt="Around The U.S. Logo"
           class="header__logo"
         />
@@ -28,7 +27,7 @@
       <main class="main">
         <section class="profile page__section">
           <img
-            src="./images/jacques-cousteau.jpg"
+            src="<%=require('./images/jacques-cousteau.jpg')%>"
             alt="Jacques Cousteau"
             class="profile__avatar"
           />
