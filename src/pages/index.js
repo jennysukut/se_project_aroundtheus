@@ -58,7 +58,6 @@ const enableValidation = (selectors) => {
     const formName = formElement.getAttribute("name");
 
     formValidators[formName] = validator;
-
     validator.enableValidation();
   });
 };
@@ -111,6 +110,7 @@ function handleProfileFormSubmit(evt) {
 
   profileEdit.close();
   profileEdit.removeEventListeners();
+  formValidators["profile-edit-form"].resetValidation(); //ind the right validator name
 }
 
 function handleAddCardFormSubmit(evt) {
@@ -119,15 +119,12 @@ function handleAddCardFormSubmit(evt) {
 
   const { title: name, link } = addCard.formValues;
   const data = addCard.formValues;
-  console.log(data);
 
   const cardElement = createCard({ name, link });
   cardSection.addItem(cardElement);
 
   evt.target.reset();
-  //validator.toggleButtonState(); //Find the form name for this specific Validator
-  //formValidators.toggleButtonState();
-  //validator.resetValidation();
+  formValidators["add-card-form"].resetValidation();
   addCard.close();
   addCard.removeEventListeners();
 }

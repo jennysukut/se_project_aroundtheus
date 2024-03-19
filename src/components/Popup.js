@@ -22,7 +22,6 @@ export default class Popup {
     if (evt.key === "Escape") {
       this.close();
     }
-    console.log("listening for esc button press");
   };
 
   _handleClickOut(evt) {
@@ -43,6 +42,5 @@ export default class Popup {
 
   removeEventListeners() {
     document.removeEventListener("keydown", this._handleEscClose);
-    console.log("event listeners removed"); //not working - the arrow function is really tricky with this
   }
 }
