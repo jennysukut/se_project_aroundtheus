@@ -27,23 +27,23 @@ import {
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
-const EditFormValidator = new FormValidator(
+const editFormValidator = new FormValidator(
   validationSettings,
   profileEditForm
 );
 
-const AddFormValidator = new FormValidator(validationSettings, addCardForm);
+const addFormValidator = new FormValidator(validationSettings, addCardForm);
 
-const PreviewModal = new PopupWithImage(selectors.previewModal);
+const previewModal = new PopupWithImage(selectors.previewModal);
 
-const AddCard = new PopupWithForm(
+const addCard = new PopupWithForm(
   handleAddCardFormSubmit,
   selectors.addCardForm
 );
 
-const CardSection = new Section(createCard, selectors.cardSection);
+const cardSection = new Section(createCard, selectors.cardSection);
 
-const ProfileEdit = new PopupWithForm(
+const profileEdit = new PopupWithForm(
   handleProfileFormSubmit,
   selectors.profileEditForm
 );
@@ -53,17 +53,17 @@ const ProfileEdit = new PopupWithForm(
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
-CardSection.renderItems(initialCards);
+cardSection.renderItems(initialCards);
 
-EditFormValidator.enableValidation();
+editFormValidator.enableValidation();
 
-AddFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
-PreviewModal.setEventListeners();
+previewModal.setEventListeners();
 
-AddCard.setEventListeners();
+addCard.setEventListeners();
 
-ProfileEdit.setEventListeners();
+profileEdit.setEventListeners();
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
@@ -77,37 +77,36 @@ function createCard(data) {
 }
 
 function handleImageClick(imgData) {
-  PreviewModal.open(imgData);
+  previewModal.open(imgData);
 }
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  ProfileEdit._getInputValues();
+  profileEdit.getInputValues();
 
-  const CurrentUserInfo = new UserInfo(ProfileEdit._formValues);
-  CurrentUserInfo.getUserInfo();
+  const { name, description } = profileEdit.formValues;
 
-  CurrentUserInfo.setUserInfo(
-    selectors.profileTitle,
-    selectors.profileDescription
-  );
+  const userInfo = new UserInfo({ name, description });
+  userInfo.getUserInfo(); // Reviewer Feedback: "getUserInfo is for getting the info. You don't need to call it just for calling" -?- If I remove it, the function doesn't work.
 
-  ProfileEdit.close();
+  userInfo.setUserInfo(selectors.profileTitle, selectors.profileDescription);
+
+  profileEdit.close();
 }
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-  AddCard._getInputValues();
+  addCard.getInputValues();
 
-  const { title: name, link } = AddCard._formValues;
-  const data = AddCard._formValues;
+  const { title: name, link } = addCard.formValues;
+  const data = addCard.formValues;
 
-  this._cardElement = createCard({ name, link });
-  CardSection.addItem(this._cardElement);
+  const cardElement = createCard({ name, link });
+  cardSection.addItem(cardElement);
 
   evt.target.reset();
-  AddFormValidator.toggleButtonState();
-  AddCard.close();
+  addFormValidator.toggleButtonState();
+  addCard.close();
 }
 
 /* 
@@ -117,9 +116,31 @@ function handleAddCardFormSubmit(evt) {
 */
 
 editProfileButton.addEventListener("click", () => {
-  ProfileEdit.open();
+  profileEdit.open();
+  profileEdit.setInputValues(
+    selectors.editFormTitle,
+    selectors.editFormDetails
+  ); //COULD I USE SET USER INFO WITH THE FORM SELECTORS?
 });
 
 addCardButton.addEventListener("click", () => {
-  AddCard.open();
+  addCard.open();
 });
+
+/*LOOK AT IMPLEMENTING THIS FORM VALIDATOR CREATOR:
+const formValidators = {};
+
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    // here you get the name of the form
+    const formName = formElement.getAttribute("name");
+
+    // here you store the validator using the `name` of the form
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(selectors); //FIND LIST OF FORMS*/

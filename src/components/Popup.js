@@ -12,6 +12,10 @@ export default class Popup {
 
   close() {
     this._popupElement.classList.remove("modal_opened");
+    document.removeEventListener("click", this._handleClickOut);
+    document.removeEventListener("keydown", (evt) => {
+      this._handleEscClose(evt);
+    });
   }
 
   _handleEscClose(evt) {
@@ -36,9 +40,5 @@ export default class Popup {
     this._popupCloseButton.addEventListener("click", () => {
       this.close();
     });
-    document.addEventListener("click", this._handleClickOut);
   }
 }
-
-//You won’t instantiate your Popup class directly in index.js;
-//instead, you’ll instantiate its children classes, as described below.

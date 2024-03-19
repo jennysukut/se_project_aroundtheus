@@ -1,7 +1,7 @@
 export default class UserInfo {
-  constructor(formValues) {
-    this._submittedName = formValues.name;
-    this._submittedDescription = formValues.description;
+  constructor({ name, description }) {
+    this._submittedName = name;
+    this._submittedDescription = description;
   }
 
   getUserInfo() {
@@ -13,10 +13,10 @@ export default class UserInfo {
   }
 
   setUserInfo(nameSelector, detailsSelector) {
-    this._nameSelector = document.querySelector(nameSelector);
-    this._detailsSelector = document.querySelector(detailsSelector);
+    this._profileName = document.querySelector(nameSelector);
+    this._profileDetails = document.querySelector(detailsSelector);
 
-    this._nameSelector.textContent = this._userInfo.name;
-    this._detailsSelector.textContent = this._userInfo.description;
+    this._profileName.textContent = this._userInfo.name;
+    this._profileDetails.textContent = this._userInfo.description;
   }
 }

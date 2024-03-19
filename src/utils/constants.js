@@ -59,4 +59,7 @@ export const selectors = {
   profileEditForm: "#profile-edit-modal",
   profileDescription: "#profile-description",
   profileTitle: "#profile-title",
+  formSelector: ".modal__form",
+  editFormTitle: "#edit-profile-modal-title",
+  editFormDetails: "#edit-profile-modal-description",
 };

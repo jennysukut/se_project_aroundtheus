@@ -5,26 +5,44 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._formElement = document.querySelector(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
-  }
-
-  _getInputValues() {
     this._formInputs = Array.from(
       this._formElement.querySelectorAll(".modal__form-input")
     );
+    this.formValues = {};
+  }
 
-    this._formValues = {};
-
+  getInputValues() {
     this._formInputs.forEach((input) => {
-      this._formValues[input.name] = input.value;
+      this.formValues[input.name] = input.value;
     });
-    console.log(this._formValues);
-    return this._formValues;
+    return this.formValues;
+  }
+
+  setInputValues(editFormTitle, editFormDetails) {
+    editFormTitle.textContent = this.formValues.name;
+    editFormDetails.textContent = this.formValues.description;
   }
 
   setEventListeners() {
     this._formElement.addEventListener("submit", (evt) => {
       this._handleFormSubmit(evt);
+      this._resetForm();
     });
     super.setEventListeners();
   }
+
+  _resetForm() {
+    this._formInputs = "";
+  }
 }
+
+/*//Reviewer Notes: 
+//You can make  setInputValues in class PopupWithForm, which can insert data into inputs:
+//So, this way you’ll not have to search the inputs of the profile in index.js 
+
+setInputValues(data) {
+  this._inputList.forEach((input) => {
+    // here you insert the `value` by the `name` of the input
+    input.value = data[input.name];
+  });
+}*/
