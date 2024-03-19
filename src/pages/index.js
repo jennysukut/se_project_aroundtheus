@@ -17,8 +17,6 @@ import {
   selectors,
   editProfileButton,
   addCardButton,
-  addCardForm,
-  profileEditForm,
 } from "../utils/constants.js";
 
 /* 
@@ -27,12 +25,13 @@ import {
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
-const editFormValidator = new FormValidator(
-  validationSettings,
-  profileEditForm
-);
+const initialUserInfo = {
+  name: "Jacques Cousteau",
+  description: "Explorer",
+};
 
-const addFormValidator = new FormValidator(validationSettings, addCardForm);
+const userInfo = new UserInfo(initialUserInfo);
+updateUserInfo(selectors.profileTitle, selectors.profileDescription);
 
 const previewModal = new PopupWithImage(selectors.previewModal);
 
@@ -48,6 +47,23 @@ const profileEdit = new PopupWithForm(
   selectors.profileEditForm
 );
 
+const formValidators = {};
+
+const enableValidation = (selectors) => {
+  const formList = Array.from(
+    document.querySelectorAll(selectors.formsSelector)
+  );
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(validationSettings, formElement);
+    const formName = formElement.getAttribute("name");
+
+    formValidators[formName] = validator;
+
+    console.log(validator);
+    validator.enableValidation();
+  });
+};
+
 /*┌─────────────────────────────────────────────────────────────────────────┐
   │ INITIALIZE INSTANCES                                                    │
   └─────────────────────────────────────────────────────────────────────────┘
@@ -55,21 +71,24 @@ const profileEdit = new PopupWithForm(
 
 cardSection.renderItems(initialCards);
 
-editFormValidator.enableValidation();
-
-addFormValidator.enableValidation();
-
 previewModal.setEventListeners();
 
 addCard.setEventListeners();
 
 profileEdit.setEventListeners();
 
+enableValidation(selectors);
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
   │ FUNCTIONS                                                               │
   └─────────────────────────────────────────────────────────────────────────┘
 */
+
+function updateUserInfo(nameSelector, detailsSelector) {
+  userInfo.getUserInfo();
+  userInfo.setUserInfo(nameSelector, detailsSelector);
+}
 
 function createCard(data) {
   const cardElement = new Card({ data, handleImageClick }, "#cards-template");
@@ -86,10 +105,10 @@ function handleProfileFormSubmit(evt) {
 
   const { name, description } = profileEdit.formValues;
 
-  const userInfo = new UserInfo({ name, description });
-  userInfo.getUserInfo(); // Reviewer Feedback: "getUserInfo is for getting the info. You don't need to call it just for calling" -?- If I remove it, the function doesn't work.
+  userInfo._name = name;
+  userInfo._description = description;
 
-  userInfo.setUserInfo(selectors.profileTitle, selectors.profileDescription);
+  updateUserInfo(selectors.profileTitle, selectors.profileDescription);
 
   profileEdit.close();
 }
@@ -100,12 +119,14 @@ function handleAddCardFormSubmit(evt) {
 
   const { title: name, link } = addCard.formValues;
   const data = addCard.formValues;
+  console.log(data);
 
   const cardElement = createCard({ name, link });
   cardSection.addItem(cardElement);
 
   evt.target.reset();
-  addFormValidator.toggleButtonState();
+  //addFormValidator.toggleButtonState(); //switch this to the new validator info
+  validator.toggleButtonState(); //FIND THE FORM NAME for ADD CARD Validator
   addCard.close();
 }
 
@@ -117,30 +138,8 @@ function handleAddCardFormSubmit(evt) {
 
 editProfileButton.addEventListener("click", () => {
   profileEdit.open();
-  profileEdit.setInputValues(
-    selectors.editFormTitle,
-    selectors.editFormDetails
-  ); //COULD I USE SET USER INFO WITH THE FORM SELECTORS?
 });
 
 addCardButton.addEventListener("click", () => {
   addCard.open();
 });
-
-/*LOOK AT IMPLEMENTING THIS FORM VALIDATOR CREATOR:
-const formValidators = {};
-
-const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(config, formElement);
-    // here you get the name of the form
-    const formName = formElement.getAttribute("name");
-
-    // here you store the validator using the `name` of the form
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(selectors); //FIND LIST OF FORMS*/

@@ -1,13 +1,13 @@
 export default class UserInfo {
   constructor({ name, description }) {
-    this._submittedName = name;
-    this._submittedDescription = description;
+    this._name = name;
+    this._description = description;
   }
 
   getUserInfo() {
     this._userInfo = {
-      name: this._submittedName,
-      description: this._submittedDescription,
+      name: this._name,
+      description: this._description,
     };
     return this._userInfo;
   }
