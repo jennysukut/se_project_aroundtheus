@@ -18,11 +18,12 @@ export default class Popup {
     });
   }
 
-  _handleEscClose(evt) {
+  _handleEscClose = (evt) => {
     if (evt.key === "Escape") {
       this.close();
     }
-  }
+    console.log("listening for esc button press");
+  };
 
   _handleClickOut(evt) {
     if (evt.target.classList.contains("modal")) {
@@ -34,11 +35,14 @@ export default class Popup {
     this._popupElement.addEventListener("click", (evt) => {
       this._handleClickOut(evt);
     });
-    document.addEventListener("keydown", (evt) => {
-      this._handleEscClose(evt);
-    });
+    document.addEventListener("keydown", this._handleEscClose);
     this._popupCloseButton.addEventListener("click", () => {
       this.close();
     });
+  }
+
+  removeEventListeners() {
+    document.removeEventListener("keydown", this._handleEscClose);
+    console.log("event listeners removed"); //not working - the arrow function is really tricky with this
   }
 }

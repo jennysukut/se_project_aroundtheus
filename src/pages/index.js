@@ -59,7 +59,6 @@ const enableValidation = (selectors) => {
 
     formValidators[formName] = validator;
 
-    console.log(validator);
     validator.enableValidation();
   });
 };
@@ -111,6 +110,7 @@ function handleProfileFormSubmit(evt) {
   updateUserInfo(selectors.profileTitle, selectors.profileDescription);
 
   profileEdit.close();
+  profileEdit.removeEventListeners();
 }
 
 function handleAddCardFormSubmit(evt) {
@@ -129,6 +129,7 @@ function handleAddCardFormSubmit(evt) {
   //formValidators.toggleButtonState();
   //validator.resetValidation();
   addCard.close();
+  addCard.removeEventListeners();
 }
 
 /* 
