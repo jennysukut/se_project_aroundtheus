@@ -69,12 +69,6 @@ const enableValidation = (selectors) => {
 
 cardSection.renderItems(initialCards);
 
-previewModal.setEventListeners();
-
-addCard.setEventListeners();
-
-profileEdit.setEventListeners();
-
 enableValidation(selectors);
 
 /* 
@@ -95,6 +89,7 @@ function createCard(data) {
 
 function handleImageClick(imgData) {
   previewModal.open(imgData);
+  previewModal.setEventListeners();
 }
 
 function handleProfileFormSubmit(evt) {
@@ -137,8 +132,11 @@ function handleAddCardFormSubmit(evt) {
 
 editProfileButton.addEventListener("click", () => {
   profileEdit.open();
+  profileEdit.setEventListeners();
+  userInfo.setUserFormValue(selectors.editFormTitle, selectors.editFormDetails);
 });
 
 addCardButton.addEventListener("click", () => {
   addCard.open();
+  addCard.setEventListeners();
 });
