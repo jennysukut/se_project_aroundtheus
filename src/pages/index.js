@@ -125,8 +125,9 @@ function handleAddCardFormSubmit(evt) {
   cardSection.addItem(cardElement);
 
   evt.target.reset();
-  //addFormValidator.toggleButtonState(); //switch this to the new validator info
-  validator.toggleButtonState(); //FIND THE FORM NAME for ADD CARD Validator
+  //validator.toggleButtonState(); //Find the form name for this specific Validator
+  //formValidators.toggleButtonState();
+  //validator.resetValidation();
   addCard.close();
 }
 
