@@ -80,9 +80,16 @@ previewModal.setEventListeners();
   └─────────────────────────────────────────────────────────────────────────┘
 */
 
-function updateUserInfo(nameSelector, detailsSelector) {
+function updateUserInfo({ name, description }) {
   currentUserInfo.getUserInfo();
-  currentUserInfo.setUserInfo(nameSelector, detailsSelector);
+  currentUserInfo.setUserInfo({ name, description });
+}
+
+function setFormInfo(nameSelector, detailsSelector) {
+  const formName = document.querySelector(nameSelector);
+  const formDetails = document.querySelector(detailsSelector);
+  formName.value = currentUserInfo._userInfo.name;
+  formDetails.value = currentUserInfo._userInfo.description;
 }
 
 function createCard(data) {
@@ -97,10 +104,7 @@ function handleImageClick(imgData) {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const { name, description } = profileEdit.formValues;
-  currentUserInfo._name = name;
-  currentUserInfo._description = description;
-
-  updateUserInfo(selectors.profileTitle, selectors.profileDescription);
+  updateUserInfo({ name, description });
 
   profileEdit.close();
   formValidators["profile-edit-form"].resetValidation();
@@ -115,7 +119,7 @@ function handleAddCardFormSubmit(evt) {
   const cardElement = createCard({ name, link });
   cardSection.addItem(cardElement);
 
-  evt.target.reset();
+  addCard._resetForm();
   formValidators["add-card-form"].resetValidation();
   addCard.close();
 }
@@ -129,10 +133,7 @@ function handleAddCardFormSubmit(evt) {
 editProfileButton.addEventListener("click", () => {
   profileEdit.open();
   currentUserInfo.getUserInfo();
-  currentUserInfo.setFormInfo(
-    selectors.editFormTitle,
-    selectors.editFormDetails
-  );
+  setFormInfo(selectors.editFormTitle, selectors.editFormDetails);
 });
 
 addCardButton.addEventListener("click", () => {
