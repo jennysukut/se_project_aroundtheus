@@ -25,13 +25,10 @@ import {
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
-const initialUserInfo = {
-  name: "Jacques Cousteau",
-  description: "Explorer",
-};
-
-const userInfo = new UserInfo(initialUserInfo);
-updateUserInfo(selectors.profileTitle, selectors.profileDescription);
+const currentUserInfo = new UserInfo(
+  selectors.profileTitle,
+  selectors.profileDescription
+);
 
 const previewModal = new PopupWithImage(selectors.previewModal);
 
@@ -71,6 +68,12 @@ cardSection.renderItems(initialCards);
 
 enableValidation(selectors);
 
+profileEdit.setEventListeners();
+
+addCard.setEventListeners();
+
+previewModal.setEventListeners();
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
   │ FUNCTIONS                                                               │
@@ -78,8 +81,8 @@ enableValidation(selectors);
 */
 
 function updateUserInfo(nameSelector, detailsSelector) {
-  userInfo.getUserInfo();
-  userInfo.setUserInfo(nameSelector, detailsSelector);
+  currentUserInfo.getUserInfo();
+  currentUserInfo.setUserInfo(nameSelector, detailsSelector);
 }
 
 function createCard(data) {
@@ -89,28 +92,22 @@ function createCard(data) {
 
 function handleImageClick(imgData) {
   previewModal.open(imgData);
-  previewModal.setEventListeners();
 }
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  profileEdit.getInputValues();
-
   const { name, description } = profileEdit.formValues;
-
-  userInfo._name = name;
-  userInfo._description = description;
+  currentUserInfo._name = name;
+  currentUserInfo._description = description;
 
   updateUserInfo(selectors.profileTitle, selectors.profileDescription);
 
   profileEdit.close();
-  profileEdit.removeEventListeners();
-  formValidators["profile-edit-form"].resetValidation(); //ind the right validator name
+  formValidators["profile-edit-form"].resetValidation();
 }
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-  addCard.getInputValues();
 
   const { title: name, link } = addCard.formValues;
   const data = addCard.formValues;
@@ -121,7 +118,6 @@ function handleAddCardFormSubmit(evt) {
   evt.target.reset();
   formValidators["add-card-form"].resetValidation();
   addCard.close();
-  addCard.removeEventListeners();
 }
 
 /* 
@@ -132,11 +128,13 @@ function handleAddCardFormSubmit(evt) {
 
 editProfileButton.addEventListener("click", () => {
   profileEdit.open();
-  profileEdit.setEventListeners();
-  userInfo.setUserFormValue(selectors.editFormTitle, selectors.editFormDetails);
+  currentUserInfo.getUserInfo();
+  currentUserInfo.setFormInfo(
+    selectors.editFormTitle,
+    selectors.editFormDetails
+  );
 });
 
 addCardButton.addEventListener("click", () => {
   addCard.open();
-  addCard.setEventListeners();
 });

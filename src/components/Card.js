@@ -2,7 +2,7 @@ export default class Card {
   constructor({ data, handleImageClick }, cardSelector) {
     this._name = data.name;
     this._link = data.link;
-    this._cardSelector = cardSelector;
+    this._currentCard = cardSelector;
     this._handleImageClick = handleImageClick;
   }
 
@@ -29,7 +29,7 @@ export default class Card {
 
   _getTemplate() {
     this._cardElement = document
-      .querySelector(this._cardSelector)
+      .querySelector(this._currentCard)
       .content.firstElementChild.cloneNode(true);
   }
 
