@@ -81,15 +81,15 @@ previewModal.setEventListeners();
 */
 
 function updateUserInfo({ name, description }) {
-  currentUserInfo.getUserInfo();
   currentUserInfo.setUserInfo({ name, description });
 }
 
 function setFormInfo(nameSelector, detailsSelector) {
   const formName = document.querySelector(nameSelector);
   const formDetails = document.querySelector(detailsSelector);
-  formName.value = currentUserInfo._userInfo.name;
-  formDetails.value = currentUserInfo._userInfo.description;
+  const { description, name } = currentUserInfo.getUserInfo();
+  formName.value = name.trim();
+  formDetails.value = description.trim();
 }
 
 function createCard(data) {
@@ -104,7 +104,7 @@ function handleImageClick(imgData) {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const { name, description } = profileEdit.formValues;
-  updateUserInfo({ name, description });
+  updateUserInfo(profileEdit.formValues);
 
   profileEdit.close();
   formValidators["profile-edit-form"].resetValidation();
@@ -114,12 +114,11 @@ function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
 
   const { title: name, link } = addCard.formValues;
-  const data = addCard.formValues;
 
   const cardElement = createCard({ name, link });
   cardSection.addItem(cardElement);
 
-  addCard._resetForm();
+  addCard.resetForm();
   formValidators["add-card-form"].resetValidation();
   addCard.close();
 }
@@ -132,7 +131,6 @@ function handleAddCardFormSubmit(evt) {
 
 editProfileButton.addEventListener("click", () => {
   profileEdit.open();
-  currentUserInfo.getUserInfo();
   setFormInfo(selectors.editFormTitle, selectors.editFormDetails);
 });
 
