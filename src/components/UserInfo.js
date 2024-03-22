@@ -1,6 +1,6 @@
 export default class UserInfo {
   constructor(profileName, profileDescription) {
-    this._name = document.querySelector(profileName); //remove textContent
+    this._name = document.querySelector(profileName);
     this._description = document.querySelector(profileDescription);
   }
 
@@ -18,7 +18,7 @@ export default class UserInfo {
     this._name.textContent = this._newTitle;
     this._description.textContent = this._newDescription;
   }
-/*
+  /*
   setFormInfo(formName, formDetails) {
     this._formName = document.querySelector(formName);
     this._formDetails = document.querySelector(formDetails);

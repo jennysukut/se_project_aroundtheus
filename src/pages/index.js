@@ -11,6 +11,8 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
+import { profileAvatar } from "../utils/constants.js";
 import {
   initialCards,
   validationSettings,
@@ -25,10 +27,32 @@ import {
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
+const profileInfo = new Api();
+profileInfo.getUserInfo().then((response) => {
+  const name = response.name;
+  const description = response.about;
+  updateUserInfo({ name, description });
+  profileAvatar.src = response.avatar;
+}); //GOT IT!
+
 const currentUserInfo = new UserInfo(
   selectors.profileTitle,
   selectors.profileDescription
 );
+
+const cardTest = new Api();
+cardTest
+  .getInitialCards()
+  .then((response) => console.log(response))
+  .catch((err) => console.log(err)); //GOT THE EMPTY ARRAY!
+
+const testCard = {
+  name: "Santorini",
+  link: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+};
+
+const newCard = new Api();
+newCard.uploadCard({ testCard }).then((response) => console.log(response)); //write a forEach method for the initial cards array that calls the uploadCard method of the newCardArray
 
 const previewModal = new PopupWithImage(selectors.previewModal);
 

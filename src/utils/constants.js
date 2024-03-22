@@ -40,6 +40,7 @@ export const editProfileButton = document.querySelector("#profile-edit-button");
 export const profileEditForm = document.forms["profile-edit-form"];
 export const addCardButton = document.querySelector(".profile__add-button");
 export const addCardForm = document.forms["add-card-form"];
+export const profileAvatar = document.querySelector(".profile__avatar");
 
 export const validationSettings = {
   inputSelector: ".modal__form-input",
