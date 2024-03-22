@@ -1,25 +1,19 @@
 export default class Api {
   //All your requests should be methods of this class:
   constructor(data) {
-    //this._baseUrl = "https://around-api.en.tripleten-services.com/v1/";
-    //this._id = data.id;
-    //this._body = data.body;
     this._authorization = "0863e235-ec04-4229-a6bf-890245ffa3f4";
   }
 
-  getInitialCards() {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
-      method: "GET",
-      headers: {
-        authorization: this._authorization,
-        "Content-Type": "application/json",
-      },
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
-    );
+  uploadInitialCards(data) {
+    //THIS WORKS!
+    console.log(data);
+    data.forEach((data) => {
+      this.uploadCard(data);
+    });
   }
 
-  uploadCard() {
+  uploadCard(data) {
+    //THIS WORKS TOO!
     return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
       method: "POST",
       headers: {
@@ -27,9 +21,21 @@ export default class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: "Santorini",
-        link: "http://example.com", //this works when outlining the specifics of the post
+        name: data.name,
+        link: data.link,
       }),
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
+    );
+  }
+
+  fetchCards() {
+    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+      method: "GET",
+      headers: {
+        authorization: this._authorization,
+        "Content-Type": "application/json",
+      },
     }).then((res) =>
       res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
     );
@@ -48,6 +54,7 @@ export default class Api {
   }
 
   changeUserInfo() {}
+  //put code with the partial change fetch here
 }
 
 /*makeGetRequest() {
