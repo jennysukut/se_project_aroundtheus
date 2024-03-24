@@ -29,6 +29,12 @@
   position: relative;
 }
 
+.modal__container_delete {
+  width: 358px;
+  height: 113px;
+  padding-top: 34px;
+}
+
 .modal__close-button {
   background: transparent url(../images/CloseIcon.svg) center no-repeat;
   background-size: contain;
@@ -100,6 +106,11 @@
   transition: opacity 0.2s linear;
   padding: 0;
   cursor: pointer;
+}
+
+.modal__button-delete {
+  margin-top: 38px;
+  width: 358px;
 }
 
 .modal__button:hover {

@@ -1,9 +1,10 @@
 export default class Card {
-  constructor({ data, handleImageClick }, cardSelector) {
+  constructor({ data, handleImageClick }, cardSelector, deleteCardConfirm) {
     this._name = data.name;
     this._link = data.link;
     this._currentCard = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._deleteCardConfirm = deleteCardConfirm;
   }
 
   generateCard() {
@@ -46,8 +47,9 @@ export default class Card {
   }
 
   _handleDeleteButton() {
-    this._cardElement.remove();
-    this._cardElement = null;
+    // this._cardElement.remove();
+    // this._cardElement = null;
+    this._deleteCardConfirm();
   }
 
   _handleLikeButton() {

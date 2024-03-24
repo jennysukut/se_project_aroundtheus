@@ -12,6 +12,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
+//import ConfirmationPopup from "../components/ConfirmationPopup.js";
 import { profileAvatar } from "../utils/constants.js";
 import {
   validationSettings,
@@ -19,6 +20,7 @@ import {
   editProfileButton,
   addCardButton,
 } from "../utils/constants.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -68,6 +70,11 @@ const profileEdit = new PopupWithForm(
   selectors.profileEditForm
 );
 
+const deleteCardConfirmModal = new PopupWithConfirmation(
+  selectors.deleteCardModal,
+  selectors.deleteCardButton
+);
+
 const formValidators = {};
 
 const enableValidation = (selectors) => {
@@ -96,6 +103,8 @@ addCard.setEventListeners();
 
 previewModal.setEventListeners();
 
+deleteCardConfirmModal.setEventListeners();
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
   │ FUNCTIONS                                                               │
@@ -114,8 +123,17 @@ function setFormInfo(nameSelector, detailsSelector) {
   formDetails.value = description.trim();
 }
 
+function deleteCardConfirm() {
+  console.log("deleteCardModal clicked");
+  deleteCardConfirmModal.open();
+}
+
 function createCard(data) {
-  const cardElement = new Card({ data, handleImageClick }, "#cards-template");
+  const cardElement = new Card(
+    { data, handleImageClick },
+    "#cards-template",
+    deleteCardConfirm
+  );
   return cardElement.generateCard();
 }
 

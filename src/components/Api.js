@@ -69,6 +69,21 @@ export default class Api {
       res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
     );
   }
+
+  deleteCard(id) {
+    return fetch(
+      `https://around-api.en.tripleten-services.com/v1/cards/${id}`,
+      {
+        method: "DELETE",
+      }
+    ).then((res) =>
+      res.ok
+        ? res.json()
+        : Promise.reject(`Uh oh! ERror: ${res.status}`).then((response) =>
+            console.log(response)
+          )
+    );
+  }
 }
 
 /*makeGetRequest() {
