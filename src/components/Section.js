@@ -14,4 +14,8 @@ export default class Section {
   addItem(element) {
     this._classContainer.append(element);
   }
+
+  removeItem(element) {
+    this._classContainer.remove(element);
+  }
 }

@@ -40,21 +40,19 @@ export default class Card {
       this._handleLikeButton();
     });
     this._cardDeleteButton.addEventListener("click", () => {
-      this._handleDeleteButton();
+      this._deleteCardConfirm(this._id);
     });
     this.cardImageElement.addEventListener("click", () => {
       this._handleImageClick({ link: this._link, name: this._name });
     });
   }
 
-  _handleDeleteButton() {
-    // this._cardElement.remove();
-    // this._cardElement = null;
-    this._deleteCardConfirm(this._id);
+  handleDeletion() {
+    this._cardElement.remove();
+    this._cardElement = null; //use/call these after the delete has been confirmed?
   }
 
   _handleLikeButton() {
     this._cardLikeButton.classList.toggle("card__like-button-active");
-    console.log(this._id);
   }
 }
