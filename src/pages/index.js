@@ -38,9 +38,9 @@ profileInfo.getUserInfo().then((response) => {
 const cardInfo = new Api();
 cardInfo.fetchCards().then((response) => {
   response.forEach((response) => {
-    const { name, link, _id } = response;
-    const cardElement = createCard({ name, link, _id });
-    cardSection.addItem(cardElement);
+    const { name, link, _id, isLiked } = response;
+    const cardElement = createCard({ name, link, _id, isLiked });
+    cardSection.addItemsFromServer(cardElement);
   });
 });
 
@@ -127,24 +127,37 @@ function createCard(data) {
   const cardElement = new Card(
     { data, handleImageClick },
     "#cards-template",
-    deleteCardConfirm
+    deleteCardConfirm,
+    handleCardLike,
+    handleCardUnlike
   );
   return cardElement.generateCard();
 }
 
-function deleteCardConfirm(id) {
-  console.log("deleteCardConfirm clicked");
-  console.log(id);
-  deleteCardConfirmModal.open(id);
+function deleteCardConfirm(id, card) {
+  deleteCardConfirmModal.open(id, card);
 }
 
 function handleImageClick(imgData) {
   previewModal.open(imgData);
 }
 
-function handleDeleteCard(id) {
-  console.log(`calling the deleteCard function on ${id}`);
-  cardInfo.deleteCard(id);
+function handleCardLike(id) {
+  cardInfo.cardLike(id);
+}
+
+function handleCardUnlike(id) {
+  cardInfo.cardUnlike(id);
+}
+
+function handleDeleteCard(id, cardElement) {
+  cardInfo.deleteCard(id).then((res) => {
+    console.log(res);
+    console.log(cardElement);
+    cardSection.removeItem(cardElement);
+    //this looks like it's working, except it goes blank after with a reload or something?
+    //it might be deleting all the card?
+  });
   //I delete the information from the server here. It isn't reflected on the home screen.
   //I have a method inside the Card class that takes the card element and removes it visually from the page/DOM without needing a reload.
   //Only I can't access the card element from right here, since it's created inside my createCard function.
@@ -157,7 +170,6 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const submittedUserInfo = profileEdit.formValues;
   const { name, description: about } = submittedUserInfo;
-  console.log({ name, about });
   profileInfo.changeUserInfo({ name, about }).then((response) => {
     const name = response.name;
     const description = response.about;
@@ -177,9 +189,7 @@ function handleAddCardFormSubmit(evt) {
   cardInfo.uploadCard({ name, link }).then((response) => {
     const cardElement = createCard(response);
     cardSection.addItem(cardElement);
-  }); //this works, but the placement is strange.
-  //When I add a card, it goes to the bottom of the list, then appears at the top on the reload?
-  //I've tried messing with the addItem, but whether I Append or Prepend, it still has the same strange way of showing up.
+  });
 
   addCard.resetForm();
   formValidators["add-card-form"].resetValidation();

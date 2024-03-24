@@ -66,4 +66,5 @@ export const selectors = {
   formsSelector: ".modal__form",
   deleteCardModal: "#delete-confirmation-modal",
   deleteCardButton: "#delete-confirmation-button",
+  cardLikeButton: "card-like-button",
 };

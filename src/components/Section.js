@@ -12,6 +12,12 @@ export default class Section {
   }
 
   addItem(element) {
+    this._classContainer.prepend(element);
+  }
+
+  //having these methods differentiated helps the layout
+
+  addItemsFromServer(element) {
     this._classContainer.append(element);
   }
 

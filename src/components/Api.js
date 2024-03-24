@@ -77,9 +77,43 @@ export default class Api {
         },
       }
     ).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
+    );
+  }
+
+  cardLike(id) {
+    return fetch(
+      `https://around-api.en.tripleten-services.com/v1/cards/${id}/likes`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: this._authorization,
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) =>
       res.ok
         ? res.json()
-        : Promise.reject(`Uh oh! ERror: ${res.status}`).then((response) =>
+        : Promise.reject(`Uh oh! Error: ${res.status}`).then((response) =>
+            console.log(response)
+          )
+    );
+  }
+
+  cardUnlike(id) {
+    return fetch(
+      `https://around-api.en.tripleten-services.com/v1/cards/${id}/likes`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: this._authorization,
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) =>
+      res.ok
+        ? res.json()
+        : Promise.reject(`Uh oh! Error: ${res.status}`).then((response) =>
             console.log(response)
           )
     );
