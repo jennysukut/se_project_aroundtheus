@@ -54,7 +54,6 @@ export default class Api {
   }
 
   changeUserInfo({ name, about }) {
-    //put code with the PATCH fetch here for https://around-api.en.tripleten-services.com/v1/users/me
     return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
       method: "PATCH",
       headers: {
@@ -71,10 +70,15 @@ export default class Api {
   }
 
   deleteCard(id) {
+    //this is working, we'd need a page reload after?
     return fetch(
       `https://around-api.en.tripleten-services.com/v1/cards/${id}`,
       {
         method: "DELETE",
+        headers: {
+          authorization: this._authorization,
+          "Content-Type": "application/json",
+        },
       }
     ).then((res) =>
       res.ok

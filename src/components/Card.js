@@ -2,6 +2,7 @@ export default class Card {
   constructor({ data, handleImageClick }, cardSelector, deleteCardConfirm) {
     this._name = data.name;
     this._link = data.link;
+    this._id = data._id;
     this._currentCard = cardSelector;
     this._handleImageClick = handleImageClick;
     this._deleteCardConfirm = deleteCardConfirm;
@@ -49,10 +50,11 @@ export default class Card {
   _handleDeleteButton() {
     // this._cardElement.remove();
     // this._cardElement = null;
-    this._deleteCardConfirm();
+    this._deleteCardConfirm(this._id);
   }
 
   _handleLikeButton() {
     this._cardLikeButton.classList.toggle("card__like-button-active");
+    console.log(this._id);
   }
 }
