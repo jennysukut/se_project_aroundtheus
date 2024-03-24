@@ -4,15 +4,15 @@ export default class Api {
     this._authorization = "0863e235-ec04-4229-a6bf-890245ffa3f4";
   }
 
-  uploadInitialCards(data) {
+  /*uploadInitialCards(data) {
     //THIS WORKS!
     console.log(data);
     data.forEach((data) => {
       this.uploadCard(data);
     });
-  }
+  }*/
 
-  uploadCard(data) {
+  uploadCard({ name, link }) {
     //THIS WORKS TOO!
     return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
       method: "POST",
@@ -21,8 +21,8 @@ export default class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: data.name,
-        link: data.link,
+        name: name,
+        link: link,
       }),
     }).then((res) =>
       res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
@@ -53,8 +53,22 @@ export default class Api {
     );
   }
 
-  changeUserInfo() {}
-  //put code with the partial change fetch here
+  changeUserInfo({ name, about }) {
+    //put code with the PATCH fetch here for https://around-api.en.tripleten-services.com/v1/users/me
+    return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
+      method: "PATCH",
+      headers: {
+        authorization: this._authorization,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
+    );
+  }
 }
 
 /*makeGetRequest() {
