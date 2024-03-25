@@ -41,6 +41,7 @@ export const profileEditForm = document.forms["profile-edit-form"];
 export const addCardButton = document.querySelector(".profile__add-button");
 export const addCardForm = document.forms["add-card-form"];
 export const profileAvatar = document.querySelector(".profile__avatar");
+export const editAvatarButton = document.querySelector(".avatar-edit-button");
 
 export const validationSettings = {
   inputSelector: ".modal__form-input",
@@ -67,6 +68,8 @@ export const selectors = {
   deleteCardModal: "#delete-confirmation-modal",
   deleteCardButton: "#delete-confirmation-button",
   cardLikeButton: "card-like-button",
-  profileAvatar: ".profile__avatar-container",
+  profileAvatarContainer: ".profile__avatar-container",
   profileAvatarEdit: ".avatar-edit-button",
+  avatarImage: ".profile__avatar",
+  editAvatarModal: "#edit-avatar-modal",
 };

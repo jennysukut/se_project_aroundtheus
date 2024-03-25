@@ -18,6 +18,7 @@ import {
   selectors,
   editProfileButton,
   addCardButton,
+  editAvatarButton,
 } from "../utils/constants.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
@@ -53,8 +54,9 @@ cardInfo.fetchCards().then((response) => {
 const currentUserInfo = new UserInfo(
   selectors.profileTitle,
   selectors.profileDescription,
-  selectors.profileAvatar,
-  selectors.profileAvatarEdit
+  selectors.profileAvatarContainer,
+  selectors.profileAvatarEdit,
+  selectors.avatarImage
 );
 
 const previewModal = new PopupWithImage(selectors.previewModal);
@@ -62,6 +64,11 @@ const previewModal = new PopupWithImage(selectors.previewModal);
 const addCard = new PopupWithForm(
   handleAddCardFormSubmit,
   selectors.addCardForm
+);
+
+const editAvatar = new PopupWithForm(
+  handleChangeAvatar,
+  selectors.editAvatarModal
 );
 
 const cardSection = new Section(createCard, selectors.cardSection);
@@ -108,6 +115,8 @@ previewModal.setEventListeners();
 deleteCardConfirmModal.setEventListeners();
 
 currentUserInfo.setEventListeners();
+
+editAvatar.setEventListeners();
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
@@ -162,10 +171,6 @@ function handleCardUnlike(id) {
 function handleDeleteCard(id, cardElement) {
   cardInfo.deleteCard(id).then((res) => {
     console.log(res);
-    //console.log(cardElement);
-    //cardSection.removeItem(cardElement);
-    //this looks like it's working, except it goes blank after with a reload or something?
-    //it might be deleting all the card?
   });
   //I delete the information from the server here. It isn't reflected on the home screen.
   //I have a method inside the Card class that takes the card element and removes it visually from the page/DOM without needing a reload.
@@ -205,6 +210,10 @@ function handleAddCardFormSubmit(evt) {
   addCard.close();
 }
 
+function handleChangeAvatar(link) {
+  //code here for updating the avatar. We can call the API function from right here and pass in the link?
+}
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
   │ EVENT LISTENERS                                                         │
@@ -218,4 +227,8 @@ editProfileButton.addEventListener("click", () => {
 
 addCardButton.addEventListener("click", () => {
   addCard.open();
+});
+
+editAvatarButton.addEventListener("click", () => {
+  editAvatar.open(); //this works!!
 });
