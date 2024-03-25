@@ -22,7 +22,7 @@ export default class Api {
         link: link,
       }),
     }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
+      res.ok ? res.json() : Promise.reject(`Uh oh! Error: ${res.status}`)
     );
   }
 
@@ -34,7 +34,7 @@ export default class Api {
         "Content-Type": "application/json",
       },
     }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
+      res.ok ? res.json() : Promise.reject(`Uh oh! Error: ${res.status}`)
     );
   }
 
@@ -46,7 +46,7 @@ export default class Api {
         "Content-Type": "application/json",
       },
     }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
+      res.ok ? res.json() : Promise.reject(`Uh oh! Error: ${res.status}`)
     );
   }
 
@@ -62,7 +62,25 @@ export default class Api {
         about: about,
       }),
     }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
+      res.ok ? res.json() : Promise.reject(`Uh oh! Error: ${res.status}`)
+    );
+  }
+
+  changeUserAvatar(avatarLink) {
+    return fetch(
+      "https://around-api.en.tripleten-services.com/v1/users/me/avatar",
+      {
+        method: "PATCH",
+        headers: {
+          authorization: this._authorization,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          avatar: avatarLink,
+        }),
+      }
+    ).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Uh oh! Error: ${res.status}`)
     );
   }
 
@@ -77,7 +95,7 @@ export default class Api {
         },
       }
     ).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Uh oh! ERror: ${res.status}`)
+      res.ok ? res.json() : Promise.reject(`Uh oh! Error: ${res.status}`)
     );
   }
 

@@ -21,7 +21,7 @@ export default class Section {
     this._classContainer.append(element);
   }
 
-  removeItem(element) {
+  removeItem({ element }) {
     console.log(this._classContainer);
     this._classContainer.remove(element);
   }

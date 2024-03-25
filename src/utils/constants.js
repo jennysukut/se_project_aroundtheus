@@ -67,4 +67,6 @@ export const selectors = {
   deleteCardModal: "#delete-confirmation-modal",
   deleteCardButton: "#delete-confirmation-button",
   cardLikeButton: "card-like-button",
+  profileAvatar: ".profile__avatar-container",
+  profileAvatarEdit: ".avatar-edit-button",
 };

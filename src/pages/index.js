@@ -52,7 +52,9 @@ cardInfo.fetchCards().then((response) => {
 
 const currentUserInfo = new UserInfo(
   selectors.profileTitle,
-  selectors.profileDescription
+  selectors.profileDescription,
+  selectors.profileAvatar,
+  selectors.profileAvatarEdit
 );
 
 const previewModal = new PopupWithImage(selectors.previewModal);
@@ -105,6 +107,8 @@ previewModal.setEventListeners();
 
 deleteCardConfirmModal.setEventListeners();
 
+currentUserInfo.setEventListeners();
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
   │ FUNCTIONS                                                               │
@@ -134,8 +138,13 @@ function createCard(data) {
   return cardElement.generateCard();
 }
 
-function deleteCardConfirm(id, card) {
-  deleteCardConfirmModal.open(id, card);
+function deleteCardConfirm(id, cardElement) {
+  deleteCardConfirmModal.open();
+  deleteCardConfirmModal.setSubmitAction(() => {
+    handleDeleteCard(id);
+  });
+  console.log(cardElement);
+  //cardSection.removeItem({ cardElement }); //this works, but it freezes the page. IT looks like it SHOULD work, and the card does get deleted. Do you use a page reload, since something was removed from the server?
 }
 
 function handleImageClick(imgData) {
@@ -153,8 +162,8 @@ function handleCardUnlike(id) {
 function handleDeleteCard(id, cardElement) {
   cardInfo.deleteCard(id).then((res) => {
     console.log(res);
-    console.log(cardElement);
-    cardSection.removeItem(cardElement);
+    //console.log(cardElement);
+    //cardSection.removeItem(cardElement);
     //this looks like it's working, except it goes blank after with a reload or something?
     //it might be deleting all the card?
   });

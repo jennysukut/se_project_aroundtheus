@@ -4,6 +4,25 @@
   padding-top: 40px;
 }
 
+.avatar-edit-button {
+  background: transparent url(../images/avatarEditButton.svg) center no-repeat;
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  visibility: hidden;
+  border: none;
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+  left: 0;
+  top: 40px;
+  padding: 60px;
+}
+
+.avatar-edit-button-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
 .profile__avatar {
   height: 120px;
   width: 120px;
@@ -11,6 +30,10 @@
   object-fit: cover;
   background-position: center;
   margin-right: 24px;
+}
+
+.profile__avatar:hover {
+  opacity: 50%;
 }
 
 .profile__info {

@@ -1,25 +1,31 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithConfirmation extends Popup {
-  constructor(popup, confirmButtonSelector, handleDeleteCard) {
+  constructor(popup, confirmButtonSelector) {
     super(popup);
     this._confirmButton = document.querySelector(confirmButtonSelector);
-    this._handleDeleteCard = handleDeleteCard;
   }
 
-  open(id, card) {
+  open() {
     super.open();
-    this._cardId = id;
-    this._cardElement = card;
-    return this._cardId;
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this._confirmButton.addEventListener("click", () => {
-      this._handleDeleteCard(this._cardId, this._cardElement);
+    this._confirmButton.addEventListener("click", (evt) => {
+      evt.preventDefault(); //put this here?
+      this._handleExecute(); //It Works!!
       this.close();
-      //this.handleRemoveCard();
     });
+    //    this._popupElement.addEventListener("keydown", (evt) => {
+    //      console.log("listening to the popup");
+    //      if (evt.key === "Enter") {
+    //        console.log("Enter pressed");
+    //      }
+    //    });
+  }
+
+  setSubmitAction(action) {
+    this._handleExecute = action;
   }
 }
