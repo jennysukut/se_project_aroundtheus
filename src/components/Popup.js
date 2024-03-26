@@ -1,9 +1,10 @@
 export default class Popup {
-  constructor(popup) {
+  constructor(popup, submitButton) {
     this._popupElement = document.querySelector(popup);
     this._popupCloseButton = this._popupElement.querySelector(
       ".modal__close-button"
     );
+    this._submitButton = document.querySelector(submitButton);
   }
 
   open() {
@@ -26,6 +27,11 @@ export default class Popup {
     if (evt.target.classList.contains("modal")) {
       this.close();
     }
+  }
+
+  setProcessingMessage(text) {
+    console.log(this._submitButton);
+    this._submitButton.textContent = text;
   }
 
   setEventListeners() {

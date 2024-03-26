@@ -66,7 +66,7 @@ export default class Api {
     );
   }
 
-  changeUserAvatar(avatarLink) {
+  changeUserAvatar(link) {
     return fetch(
       "https://around-api.en.tripleten-services.com/v1/users/me/avatar",
       {
@@ -76,7 +76,7 @@ export default class Api {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          avatar: avatarLink,
+          avatar: link,
         }),
       }
     ).then((res) =>

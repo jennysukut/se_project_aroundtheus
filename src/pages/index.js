@@ -19,6 +19,7 @@ import {
   editProfileButton,
   addCardButton,
   editAvatarButton,
+  savingMessage,
 } from "../utils/constants.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
@@ -63,11 +64,12 @@ const previewModal = new PopupWithImage(selectors.previewModal);
 
 const addCard = new PopupWithForm(
   handleAddCardFormSubmit,
-  selectors.addCardForm
+  selectors.addCardForm,
+  selectors.addCardButton
 );
 
 const editAvatar = new PopupWithForm(
-  handleChangeAvatar,
+  handleChangeAvatarSubmit,
   selectors.editAvatarModal
 );
 
@@ -75,7 +77,8 @@ const cardSection = new Section(createCard, selectors.cardSection);
 
 const profileEdit = new PopupWithForm(
   handleProfileFormSubmit,
-  selectors.profileEditForm
+  selectors.profileEditForm,
+  selectors.profileEditButton
 );
 
 const deleteCardConfirmModal = new PopupWithConfirmation(
@@ -106,13 +109,13 @@ const enableValidation = (selectors) => {
 
 enableValidation(selectors);
 
-profileEdit.setEventListeners();
+profileEdit.setEventListeners(savingMessage);
 
-addCard.setEventListeners();
+addCard.setEventListeners(savingMessage);
 
 previewModal.setEventListeners();
 
-deleteCardConfirmModal.setEventListeners();
+deleteCardConfirmModal.setEventListeners(savingMessage);
 
 currentUserInfo.setEventListeners();
 
@@ -153,7 +156,9 @@ function deleteCardConfirm(id, cardElement) {
     handleDeleteCard(id);
   });
   console.log(cardElement);
-  //cardSection.removeItem({ cardElement }); //this works, but it freezes the page. IT looks like it SHOULD work, and the card does get deleted. Do you use a page reload, since something was removed from the server?
+  //cardSection.removeItem({ cardElement }); //Whenever I call this, it freezes the page.
+  //IT looks like it SHOULD work, and the card does get deleted.
+  //Do you use a page reload, since something was removed from the server?
 }
 
 function handleImageClick(imgData) {
@@ -184,14 +189,20 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const submittedUserInfo = profileEdit.formValues;
   const { name, description: about } = submittedUserInfo;
-  profileInfo.changeUserInfo({ name, about }).then((response) => {
-    const name = response.name;
-    const description = response.about;
-    updateUserInfo({ name, description });
-  });
-
-  profileEdit.close();
-  formValidators["profile-edit-form"].resetValidation();
+  profileInfo
+    .changeUserInfo({ name, about })
+    .then((response) => {
+      const name = response.name;
+      const description = response.about;
+      updateUserInfo({ name, description });
+    })
+    .then((res) => {
+      profileEdit.close(); //the form is cleared of it's values after submission, before the modal closes. Is it supposed to be this way?
+    })
+    .then((res) => {
+      formValidators["profile-edit-form"].resetValidation();
+      profileEdit.resetForm(); //don't forget to reset the form to having the original text content in place after submission.
+    });
 }
 
 function handleAddCardFormSubmit(evt) {
@@ -210,8 +221,14 @@ function handleAddCardFormSubmit(evt) {
   addCard.close();
 }
 
-function handleChangeAvatar(link) {
-  //code here for updating the avatar. We can call the API function from right here and pass in the link?
+function handleChangeAvatarSubmit(evt) {
+  evt.preventDefault();
+  const { link } = editAvatar.formValues;
+  console.log(link); // got it!
+  profileInfo.changeUserAvatar(link); //this works! It just needs a reload of the page to actually show up.
+
+  editAvatar.close();
+  formValidators["edit-avatar-form"].resetValidation();
 }
 
 /* 
@@ -230,5 +247,5 @@ addCardButton.addEventListener("click", () => {
 });
 
 editAvatarButton.addEventListener("click", () => {
-  editAvatar.open(); //this works!!
+  editAvatar.open();
 });

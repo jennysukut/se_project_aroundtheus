@@ -1,9 +1,10 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor(handleFormSubmit, popup) {
-    super(popup);
+  constructor(handleFormSubmit, popup, submitButton) {
+    super(popup, submitButton);
     this._handleFormSubmit = handleFormSubmit;
+    // this._submitButton = document.querySelector(submitButton);
   }
 
   _getInputValues() {
@@ -18,11 +19,12 @@ export default class PopupWithForm extends Popup {
     return this.formValues;
   }
 
-  setEventListeners() {
+  setEventListeners(processingMessage) {
     this._popupElement.addEventListener("submit", (evt) => {
       this._getInputValues();
       this._handleFormSubmit(evt);
       this.resetForm();
+      this.setProcessingMessage(processingMessage); //this and the popup have to stay opened until the data is done processing?
     });
     super.setEventListeners();
   }
