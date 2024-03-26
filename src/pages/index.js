@@ -190,7 +190,8 @@ function handleAddCardFormSubmit(evt) {
     })
     .then((res) => {
       addCard.close();
-      //cardElement.onLoad = addCard.close(); //find a way to use an onload function to make sure this isn't closed until the card is loaded
+      //cardElement.onLoad = addCard.close();
+      //find a way to use an onload function to make sure this isn't closed until the card is loaded
     })
     .then((res) => {
       addCard.resetForm();
