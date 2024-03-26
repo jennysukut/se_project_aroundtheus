@@ -13,16 +13,10 @@ export default class PopupWithConfirmation extends Popup {
   setEventListeners() {
     super.setEventListeners();
     this._confirmButton.addEventListener("click", (evt) => {
-      evt.preventDefault(); //put this here?
-      this._handleExecute(); //It Works!!
+      evt.preventDefault();
+      this._handleExecute();
       this.close();
     });
-    //    this._popupElement.addEventListener("keydown", (evt) => {
-    //      console.log("listening to the popup");
-    //      if (evt.key === "Enter") {
-    //        console.log("Enter pressed");
-    //      }
-    //    });
   }
 
   setSubmitAction(action) {

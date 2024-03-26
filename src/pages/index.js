@@ -83,8 +83,7 @@ const profileEdit = new PopupWithForm(
 
 const deleteCardConfirmModal = new PopupWithConfirmation(
   selectors.deleteCardModal,
-  selectors.deleteCardButton,
-  handleDeleteCard
+  selectors.deleteCardButton
 );
 
 const formValidators = {};
@@ -153,11 +152,10 @@ function createCard(data) {
 function deleteCardConfirm(id, cardElement) {
   deleteCardConfirmModal.open();
   deleteCardConfirmModal.setSubmitAction(() => {
-    handleDeleteCard(id);
+    handleDeleteCard(id, cardElement);
   });
-  console.log(cardElement);
   //cardSection.removeItem({ cardElement }); //Whenever I call this, it freezes the page.
-  //IT looks like it SHOULD work, and the card does get deleted.
+  //It looks like it SHOULD work, and the card does get deleted.
   //Do you use a page reload, since something was removed from the server?
 }
 
@@ -176,13 +174,9 @@ function handleCardUnlike(id) {
 function handleDeleteCard(id, cardElement) {
   cardInfo.deleteCard(id).then((res) => {
     console.log(res);
+    cardElement.remove();
+    cardElement = null;
   });
-  //I delete the information from the server here. It isn't reflected on the home screen.
-  //I have a method inside the Card class that takes the card element and removes it visually from the page/DOM without needing a reload.
-  //Only I can't access the card element from right here, since it's created inside my createCard function.
-  //Here are a few things I've tried:
-  //cardSection.removeItem(cardElement);
-  //cardElement.handleDeleteConfirmation(); //can't access cardElement from here.
 }
 
 function handleProfileFormSubmit(evt) {
@@ -197,11 +191,12 @@ function handleProfileFormSubmit(evt) {
       updateUserInfo({ name, description });
     })
     .then((res) => {
-      profileEdit.close(); //the form is cleared of it's values after submission, before the modal closes. Is it supposed to be this way?
+      profileEdit.close();
     })
     .then((res) => {
       formValidators["profile-edit-form"].resetValidation();
-      profileEdit.resetForm(); //don't forget to reset the form to having the original text content in place after submission.
+      profileEdit.removeProcessingMessage("Save");
+      profileEdit.resetForm();
     });
 }
 
@@ -211,20 +206,27 @@ function handleAddCardFormSubmit(evt) {
   const submittedCardInfo = addCard.formValues;
   const { title: name, link } = submittedCardInfo;
 
-  cardInfo.uploadCard({ name, link }).then((response) => {
-    const cardElement = createCard(response);
-    cardSection.addItem(cardElement);
-  });
-
-  addCard.resetForm();
-  formValidators["add-card-form"].resetValidation();
-  addCard.close();
+  cardInfo
+    .uploadCard({ name, link })
+    .then((response) => {
+      const cardElement = createCard(response);
+      cardSection.addItem(cardElement);
+    })
+    .then((res) => {
+      addCard.close();
+      //cardElement.onLoad = addCard.close(); //find a way to use an onload function to make sure this isn't closed until the card is loaded
+    })
+    .then((res) => {
+      addCard.resetForm();
+      addCard.removeProcessingMessage("Create");
+      formValidators["add-card-form"].resetValidation();
+    });
 }
 
 function handleChangeAvatarSubmit(evt) {
   evt.preventDefault();
   const { link } = editAvatar.formValues;
-  console.log(link); // got it!
+  console.log(link);
   profileInfo.changeUserAvatar(link); //this works! It just needs a reload of the page to actually show up.
 
   editAvatar.close();

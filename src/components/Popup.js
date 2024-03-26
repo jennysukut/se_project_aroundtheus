@@ -34,6 +34,11 @@ export default class Popup {
     this._submitButton.textContent = text;
   }
 
+  removeProcessingMessage(text) {
+    console.log(this._submitButton);
+    this._submitButton.textContent = text;
+  }
+
   setEventListeners() {
     this._popupElement.addEventListener("click", (evt) => {
       this._handleClickOut(evt);
