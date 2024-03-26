@@ -76,4 +76,5 @@ export const selectors = {
   profileEditButton: "#edit-profile-modal-save-button",
   addCardButton: "#add-card-modal-button",
   deleteCardForm: "#delete-card-form",
+  avatarEditSubmitButton: "#edit-avatar-modal-button",
 };

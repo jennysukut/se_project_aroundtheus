@@ -22,7 +22,6 @@ export default class Section {
   }
 
   removeItem({ element }) {
-    console.log(this._classContainer);
     this._classContainer.remove(element);
   }
 }

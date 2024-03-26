@@ -35,7 +35,6 @@ export default class Popup {
   }
 
   removeProcessingMessage(text) {
-    console.log(this._submitButton);
     this._submitButton.textContent = text;
   }
 

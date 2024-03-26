@@ -25,29 +25,6 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
-  │ CREATE APIS                                                             │
-  └─────────────────────────────────────────────────────────────────────────┘
- */
-
-const profileInfo = new Api();
-profileInfo.getUserInfo().then((response) => {
-  const name = response.name;
-  const description = response.about;
-  updateUserInfo({ name, description });
-  profileAvatar.src = response.avatar;
-});
-
-const cardInfo = new Api();
-cardInfo.fetchCards().then((response) => {
-  response.forEach((response) => {
-    const { name, link, _id, isLiked } = response;
-    const cardElement = createCard({ name, link, _id, isLiked });
-    cardSection.addItemsFromServer(cardElement);
-  });
-});
-
-/* 
-  ┌─────────────────────────────────────────────────────────────────────────┐
   │ CREATE CLASS INSTANCES                                                  │
   └─────────────────────────────────────────────────────────────────────────┘
  */
@@ -70,7 +47,8 @@ const addCard = new PopupWithForm(
 
 const editAvatar = new PopupWithForm(
   handleChangeAvatarSubmit,
-  selectors.editAvatarModal
+  selectors.editAvatarModal,
+  selectors.avatarEditSubmitButton
 );
 
 const cardSection = new Section(createCard, selectors.cardSection);
@@ -118,7 +96,7 @@ deleteCardConfirmModal.setEventListeners(savingMessage);
 
 currentUserInfo.setEventListeners();
 
-editAvatar.setEventListeners();
+editAvatar.setEventListeners(savingMessage);
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
@@ -154,9 +132,6 @@ function deleteCardConfirm(id, cardElement) {
   deleteCardConfirmModal.setSubmitAction(() => {
     handleDeleteCard(id, cardElement);
   });
-  //cardSection.removeItem({ cardElement }); //Whenever I call this, it freezes the page.
-  //It looks like it SHOULD work, and the card does get deleted.
-  //Do you use a page reload, since something was removed from the server?
 }
 
 function handleImageClick(imgData) {
@@ -173,9 +148,9 @@ function handleCardUnlike(id) {
 
 function handleDeleteCard(id, cardElement) {
   cardInfo.deleteCard(id).then((res) => {
-    console.log(res);
     cardElement.remove();
     cardElement = null;
+    deleteCardConfirmModal.removeProcessingMessage("Yes");
   });
 }
 
@@ -205,6 +180,7 @@ function handleAddCardFormSubmit(evt) {
 
   const submittedCardInfo = addCard.formValues;
   const { title: name, link } = submittedCardInfo;
+  console.log(name);
 
   cardInfo
     .uploadCard({ name, link })
@@ -226,11 +202,12 @@ function handleAddCardFormSubmit(evt) {
 function handleChangeAvatarSubmit(evt) {
   evt.preventDefault();
   const { link } = editAvatar.formValues;
-  console.log(link);
-  profileInfo.changeUserAvatar(link); //this works! It just needs a reload of the page to actually show up.
-
-  editAvatar.close();
-  formValidators["edit-avatar-form"].resetValidation();
+  profileInfo.changeUserAvatar(link).then((res) => {
+    profileAvatar.src = link;
+    editAvatar.close();
+    editAvatar.removeProcessingMessage("Save");
+    formValidators["edit-avatar-form"].resetValidation();
+  });
 }
 
 /* 
@@ -250,4 +227,27 @@ addCardButton.addEventListener("click", () => {
 
 editAvatarButton.addEventListener("click", () => {
   editAvatar.open();
+});
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ CREATE APIS                                                             │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
+
+const profileInfo = new Api();
+profileInfo.getUserInfo().then((response) => {
+  const name = response.name;
+  const description = response.about;
+  updateUserInfo({ name, description });
+  profileAvatar.src = response.avatar;
+});
+
+const cardInfo = new Api();
+cardInfo.fetchCards().then((response) => {
+  response.forEach((response) => {
+    const { name, link, _id, isLiked } = response;
+    const cardElement = createCard({ name, link, _id, isLiked });
+    cardSection.addItemsFromServer(cardElement);
+  });
 });

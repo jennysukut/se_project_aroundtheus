@@ -62,18 +62,20 @@ export default class Card {
     });
   }
 
-  handleDeletion() {
-    this._cardElement.remove();
-    this._cardElement = null; //use/call these after the delete has been confirmed?
-  }
+  // handleDeletion() {
+  //   this._cardElement.remove();
+  //   this._cardElement = null; //use/call these after the delete has been confirmed?
+  // }
 
   _handleLikeButton() {
     if (!this._isLiked) {
       this._cardLikeButton.classList.add("card__like-button-active");
       this._cardLikeFunction(this._id);
+      this._isLiked = true;
     } else {
       this._cardLikeButton.classList.remove("card__like-button-active");
       this._cardUnlikeFunction(this._id);
+      this._isLiked = false;
     }
   }
 }

@@ -38,9 +38,8 @@ export default class UserInfo {
       this._avatarEditButton.classList.remove("avatar-edit-button-visible");
       this._avatarImage.classList.remove("profile__avatar-shaded");
     });
-    this._avatarEditButton.addEventListener("click", () => {
-      console.log("edit button clicked"); // this works!
-      //code here to open the popupModal to change the profile avatar
-    });
+    // this._avatarEditButton.addEventListener("click", () => {
+    //   //code here to open the popupModal to change the profile avatar
+    // });
   }
 }
