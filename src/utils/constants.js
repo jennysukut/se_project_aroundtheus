@@ -3,7 +3,7 @@
   └─────────────────────────────────────────────────────────────────────────┘
    */
 
-export const initialCards = [
+/*export const initialCards = [
   {
     name: "Dolomites",
     link: "https://images.unsplash.com/photo-1683899266164-219e1ebdf029?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -28,7 +28,7 @@ export const initialCards = [
     name: "Santorini",
     link: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
-];
+];*/
 
 /* 
       ┌─────────────────────────────────────────────────────────────────────────┐
@@ -40,6 +40,9 @@ export const editProfileButton = document.querySelector("#profile-edit-button");
 export const profileEditForm = document.forms["profile-edit-form"];
 export const addCardButton = document.querySelector(".profile__add-button");
 export const addCardForm = document.forms["add-card-form"];
+export const profileAvatar = document.querySelector(".profile__avatar");
+export const editAvatarButton = document.querySelector(".avatar-edit-button");
+export const savingMessage = "Saving...";
 
 export const validationSettings = {
   inputSelector: ".modal__form-input",
@@ -63,4 +66,15 @@ export const selectors = {
   editFormTitle: "#edit-profile-modal-title",
   editFormDetails: "#edit-profile-modal-description",
   formsSelector: ".modal__form",
+  deleteCardModal: "#delete-confirmation-modal",
+  deleteCardButton: "#delete-confirmation-button",
+  cardLikeButton: "card-like-button",
+  profileAvatarContainer: ".profile__avatar-container",
+  profileAvatarEdit: ".avatar-edit-button",
+  avatarImage: ".profile__avatar",
+  editAvatarModal: "#edit-avatar-modal",
+  profileEditButton: "#edit-profile-modal-save-button",
+  addCardButton: "#add-card-modal-button",
+  deleteCardForm: "#delete-card-form",
+  avatarEditSubmitButton: "#edit-avatar-modal-button",
 };
