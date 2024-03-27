@@ -4,7 +4,6 @@ export default class Popup {
     this._popupCloseButton = this._popupElement.querySelector(
       ".modal__close-button"
     );
-    this._submitButton = document.querySelector(submitButton);
   }
 
   open() {
@@ -27,15 +26,6 @@ export default class Popup {
     if (evt.target.classList.contains("modal")) {
       this.close();
     }
-  }
-
-  setProcessingMessage(text) {
-    console.log(this._submitButton);
-    this._submitButton.textContent = text;
-  }
-
-  removeProcessingMessage(text) {
-    this._submitButton.textContent = text;
   }
 
   setEventListeners() {

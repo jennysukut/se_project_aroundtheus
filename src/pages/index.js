@@ -121,8 +121,7 @@ function createCard(data) {
     { data, handleImageClick },
     "#cards-template",
     deleteCardConfirm,
-    handleCardLike,
-    handleCardUnlike
+    handleCardLike
   );
   return cardElement.generateCard();
 }
@@ -138,40 +137,55 @@ function handleImageClick(imgData) {
   previewModal.open(imgData);
 }
 
-function handleCardLike(id) {
-  cardInfo.cardLike(id);
-}
-
-function handleCardUnlike(id) {
-  cardInfo.cardUnlike(id);
+function handleCardLike(id, likeFunction, unlikeFunction, button, card) {
+  if (!card._isLiked) {
+    pageInfo.cardLike(id).then((res) => {
+      likeFunction(button, card);
+    });
+  } else {
+    pageInfo.cardUnlike(id).then((res) => {
+      unlikeFunction(button, card);
+    });
+  }
 }
 
 function handleDeleteCard(id, cardElement) {
-  cardInfo.deleteCard(id).then((res) => {
-    cardElement.remove();
-    cardElement = null;
-    deleteCardConfirmModal.removeProcessingMessage("Yes");
-  });
+  pageInfo
+    .deleteCard(id)
+    .then((res) => {
+      cardElement.remove();
+      cardElement = null;
+      deleteCardConfirmModal.close();
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      deleteCardConfirmModal.removeProcessingMessage("Yes");
+    });
 }
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  const submittedUserInfo = profileEdit.formValues;
+  const submittedUserInfo = profileEdit.formValues; //REVIEWER COMMENT HERE FOR MAKING SUBMIT FUNCTION
   const { name, description: about } = submittedUserInfo;
-  profileInfo
+  pageInfo
     .changeUserInfo({ name, about })
     .then((response) => {
       const name = response.name;
       const description = response.about;
       updateUserInfo({ name, description });
+      return response;
     })
     .then((res) => {
+      console.log(res);
       profileEdit.close();
     })
     .then((res) => {
       formValidators["profile-edit-form"].resetValidation();
-      profileEdit.removeProcessingMessage("Save");
       profileEdit.resetForm();
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      profileEdit.removeProcessingMessage("Save");
     });
 }
 
@@ -180,35 +194,43 @@ function handleAddCardFormSubmit(evt) {
 
   const submittedCardInfo = addCard.formValues;
   const { title: name, link } = submittedCardInfo;
-  console.log(name);
-
-  cardInfo
+  pageInfo
     .uploadCard({ name, link })
     .then((response) => {
       const cardElement = createCard(response);
-      cardSection.addItem(cardElement);
+      cardSection.pasteItem(cardElement);
+      return response;
     })
-    .then((res) => {
+    .then((response) => {
       addCard.close();
-      //cardElement.onLoad = addCard.close();
-      //find a way to use an onload function to make sure this isn't closed until the card is loaded
-    })
-    .then((res) => {
       addCard.resetForm();
-      addCard.removeProcessingMessage("Create");
       formValidators["add-card-form"].resetValidation();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      addCard.removeProcessingMessage("Create");
     });
 }
 
 function handleChangeAvatarSubmit(evt) {
   evt.preventDefault();
   const { link } = editAvatar.formValues;
-  profileInfo.changeUserAvatar(link).then((res) => {
-    profileAvatar.src = link;
-    editAvatar.close();
-    editAvatar.removeProcessingMessage("Save");
-    formValidators["edit-avatar-form"].resetValidation();
-  });
+  pageInfo
+    .changeUserAvatar(link)
+    .then((res) => {
+      currentUserInfo.updateAvatar(link);
+      return res;
+    })
+    .then((response) => {
+      editAvatar.close();
+      formValidators["edit-avatar-form"].resetValidation();
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      editAvatar.removeProcessingMessage("Save");
+    });
 }
 
 /* 
@@ -236,19 +258,26 @@ editAvatarButton.addEventListener("click", () => {
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
-const profileInfo = new Api();
-profileInfo.getUserInfo().then((response) => {
+const headers = {
+  authorization: "0863e235-ec04-4229-a6bf-890245ffa3f4",
+  "Content-Type": "application/json",
+};
+
+const pageInfo = new Api(
+  "https://around-api.en.tripleten-services.com/v1",
+  headers
+);
+
+pageInfo.getUserInfo().then((response) => {
   const name = response.name;
   const description = response.about;
   updateUserInfo({ name, description });
-  profileAvatar.src = response.avatar;
+  currentUserInfo.updateAvatar(response.avatar);
 });
 
-const cardInfo = new Api();
-cardInfo.fetchCards().then((response) => {
-  response.forEach((response) => {
-    const { name, link, _id, isLiked } = response;
-    const cardElement = createCard({ name, link, _id, isLiked });
-    cardSection.addItemsFromServer(cardElement);
-  });
+pageInfo.fetchCards().then((data) => {
+  // const { name, link, _id, isLiked } = data;
+  cardSection.renderItems(data);
 });
+
+//pageInfo.deleteCard();

@@ -28,6 +28,10 @@ export default class UserInfo {
     this._description.textContent = this._newDescription;
   }
 
+  updateAvatar(imgLink) {
+    this._avatarImage.src = imgLink;
+  }
+
   setEventListeners() {
     this._avatar.addEventListener("mouseover", () => {
       //DO NOT TOUCH

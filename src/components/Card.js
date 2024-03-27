@@ -52,7 +52,13 @@ export default class Card {
 
   _setEventListeners() {
     this._cardLikeButton.addEventListener("click", () => {
-      this._handleLikeButton();
+      this._cardLikeFunction(
+        this._id,
+        this._likeFunction,
+        this._unlikeFunction,
+        this._cardLikeButton,
+        this
+      );
     });
     this._cardDeleteButton.addEventListener("click", () => {
       this._deleteCardConfirm(this._id, this._cardElement);
@@ -62,20 +68,13 @@ export default class Card {
     });
   }
 
-  // handleDeletion() {
-  //   this._cardElement.remove();
-  //   this._cardElement = null; //use/call these after the delete has been confirmed?
-  // }
+  _likeFunction(button, card) {
+    button.classList.add("card__like-button-active");
+    card._isLiked = true;
+  }
 
-  _handleLikeButton() {
-    if (!this._isLiked) {
-      this._cardLikeButton.classList.add("card__like-button-active");
-      this._cardLikeFunction(this._id);
-      this._isLiked = true;
-    } else {
-      this._cardLikeButton.classList.remove("card__like-button-active");
-      this._cardUnlikeFunction(this._id);
-      this._isLiked = false;
-    }
+  _unlikeFunction(button, card) {
+    button.classList.remove("card__like-button-active");
+    card._isLiked = false;
   }
 }
