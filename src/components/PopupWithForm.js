@@ -33,6 +33,14 @@ export default class PopupWithForm extends Popup {
     this._form.reset();
   }
 
+  renderLoading(loadingText) {
+    if (true) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      console.log("this button should be regular now");
+    }
+  }
+
   setProcessingMessage(text) {
     this._submitButton.textContent = text;
   }

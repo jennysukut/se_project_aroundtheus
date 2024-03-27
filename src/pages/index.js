@@ -12,7 +12,6 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
-import { profileAvatar } from "../utils/constants.js";
 import {
   validationSettings,
   selectors,
@@ -22,6 +21,19 @@ import {
   savingMessage,
 } from "../utils/constants.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ CREATE API                                                              │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
+
+const headers = {
+  authorization: "0863e235-ec04-4229-a6bf-890245ffa3f4",
+  "Content-Type": "application/json",
+};
+
+const api = new Api("https://around-api.en.tripleten-services.com/v1", headers);
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -37,15 +49,15 @@ const currentUserInfo = new UserInfo(
   selectors.avatarImage
 );
 
-const previewModal = new PopupWithImage(selectors.previewModal);
+const previewPopup = new PopupWithImage(selectors.previewModal);
 
-const addCard = new PopupWithForm(
+const addCardPopup = new PopupWithForm(
   handleAddCardFormSubmit,
   selectors.addCardForm,
   selectors.addCardButton
 );
 
-const editAvatar = new PopupWithForm(
+const editAvatarPopup = new PopupWithForm(
   handleChangeAvatarSubmit,
   selectors.editAvatarModal,
   selectors.avatarEditSubmitButton
@@ -53,13 +65,13 @@ const editAvatar = new PopupWithForm(
 
 const cardSection = new Section(createCard, selectors.cardSection);
 
-const profileEdit = new PopupWithForm(
+const profileEditPopup = new PopupWithForm(
   handleProfileFormSubmit,
   selectors.profileEditForm,
   selectors.profileEditButton
 );
 
-const deleteCardConfirmModal = new PopupWithConfirmation(
+const deleteCardConfirmPopup = new PopupWithConfirmation(
   selectors.deleteCardModal,
   selectors.deleteCardButton
 );
@@ -86,17 +98,17 @@ const enableValidation = (selectors) => {
 
 enableValidation(selectors);
 
-profileEdit.setEventListeners(savingMessage);
+profileEditPopup.setEventListeners(savingMessage);
 
-addCard.setEventListeners(savingMessage);
+addCardPopup.setEventListeners(savingMessage);
 
-previewModal.setEventListeners();
+previewPopup.setEventListeners();
 
-deleteCardConfirmModal.setEventListeners(savingMessage);
+deleteCardConfirmPopup.setEventListeners(savingMessage);
 
 currentUserInfo.setEventListeners();
 
-editAvatar.setEventListeners(savingMessage);
+editAvatarPopup.setEventListeners(savingMessage);
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
@@ -127,47 +139,53 @@ function createCard(data) {
 }
 
 function deleteCardConfirm(id, cardElement) {
-  deleteCardConfirmModal.open();
-  deleteCardConfirmModal.setSubmitAction(() => {
+  deleteCardConfirmPopup.open();
+  deleteCardConfirmPopup.setSubmitAction(() => {
     handleDeleteCard(id, cardElement);
   });
 }
 
 function handleImageClick(imgData) {
-  previewModal.open(imgData);
+  previewPopup.open(imgData);
 }
 
 function handleCardLike(id, likeFunction, unlikeFunction, button, card) {
-  if (!card._isLiked) {
-    pageInfo.cardLike(id).then((res) => {
-      likeFunction(button, card);
-    });
+  if (!card.isLiked) {
+    api
+      .cardLike(id)
+      .then((res) => {
+        likeFunction(button, card);
+      })
+      .catch((err) => console.log(err));
   } else {
-    pageInfo.cardUnlike(id).then((res) => {
-      unlikeFunction(button, card);
-    });
+    api
+      .cardUnlike(id)
+      .then((res) => {
+        unlikeFunction(button, card);
+      })
+      .catch((err) => console.log(err));
   }
 }
 
 function handleDeleteCard(id, cardElement) {
-  pageInfo
+  api
     .deleteCard(id)
     .then((res) => {
       cardElement.remove();
       cardElement = null;
-      deleteCardConfirmModal.close();
+      deleteCardConfirmPopup.close();
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      deleteCardConfirmModal.removeProcessingMessage("Yes");
+      deleteCardConfirmPopup.removeProcessingMessage("Yes");
     });
 }
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  const submittedUserInfo = profileEdit.formValues; //REVIEWER COMMENT HERE FOR MAKING SUBMIT FUNCTION
+  const submittedUserInfo = profileEditPopup.formValues;
   const { name, description: about } = submittedUserInfo;
-  pageInfo
+  api
     .changeUserInfo({ name, about })
     .then((response) => {
       const name = response.name;
@@ -176,25 +194,24 @@ function handleProfileFormSubmit(evt) {
       return response;
     })
     .then((res) => {
-      console.log(res);
-      profileEdit.close();
+      profileEditPopup.close();
     })
     .then((res) => {
       formValidators["profile-edit-form"].resetValidation();
-      profileEdit.resetForm();
+      profileEditPopup.resetForm();
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      profileEdit.removeProcessingMessage("Save");
+      profileEditPopup.removeProcessingMessage("Save");
     });
 }
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
 
-  const submittedCardInfo = addCard.formValues;
+  const submittedCardInfo = addCardPopup.formValues;
   const { title: name, link } = submittedCardInfo;
-  pageInfo
+  api
     .uploadCard({ name, link })
     .then((response) => {
       const cardElement = createCard(response);
@@ -202,36 +219,71 @@ function handleAddCardFormSubmit(evt) {
       return response;
     })
     .then((response) => {
-      addCard.close();
-      addCard.resetForm();
+      addCardPopup.close();
+      addCardPopup.resetForm();
       formValidators["add-card-form"].resetValidation();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      addCard.removeProcessingMessage("Create");
+      addCardPopup.removeProcessingMessage("Create");
     });
 }
 
 function handleChangeAvatarSubmit(evt) {
   evt.preventDefault();
-  const { link } = editAvatar.formValues;
-  pageInfo
+  const { link } = editAvatarPopup.formValues;
+  api
     .changeUserAvatar(link)
     .then((res) => {
       currentUserInfo.updateAvatar(link);
       return res;
     })
     .then((response) => {
-      editAvatar.close();
+      editAvatarPopup.close();
       formValidators["edit-avatar-form"].resetValidation();
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      editAvatar.removeProcessingMessage("Save");
+      editAvatarPopup.removeProcessingMessage("Save");
     });
 }
+
+/*function handleSubmit(request, data, popupInstance, loadingText = "Saving...") {
+  // here we change the button text
+  popupInstance.renderLoading(true, loadingText);
+  request(data)
+    .then(() => {
+      popupInstance.close();
+    })
+    .catch(console.error)
+    .finally(() => {
+      popupInstance.renderLoading(false);
+    });
+}
+
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+  const submittedUserInfo = profileEditPopup.formValues; //REVIEWER COMMENT HERE FOR MAKING SUBMIT FUNCTION
+  const { name, description: about } = submittedUserInfo;
+  handleSubmit(
+    api.changeUserInfo,
+    { name, about },
+    profileEditPopup,
+    "Saving..."
+  )
+    .then((response) => {
+      const name = response.name;
+      const description = response.about;
+      updateUserInfo({ name, description });
+      return response;
+    })
+    .then((res) => {
+      formValidators["profile-edit-form"].resetValidation();
+      profileEditPopup.resetForm();
+    });
+}*/
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────│
@@ -240,44 +292,32 @@ function handleChangeAvatarSubmit(evt) {
 */
 
 editProfileButton.addEventListener("click", () => {
-  profileEdit.open();
+  profileEditPopup.open();
   setFormInfo(selectors.editFormTitle, selectors.editFormDetails);
 });
 
 addCardButton.addEventListener("click", () => {
-  addCard.open();
+  addCardPopup.open();
 });
 
 editAvatarButton.addEventListener("click", () => {
-  editAvatar.open();
+  editAvatarPopup.open();
 });
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
-  │ CREATE APIS                                                             │
+  │ LOAD PAGE                                                               │
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
-const headers = {
-  authorization: "0863e235-ec04-4229-a6bf-890245ffa3f4",
-  "Content-Type": "application/json",
-};
-
-const pageInfo = new Api(
-  "https://around-api.en.tripleten-services.com/v1",
-  headers
-);
-
-pageInfo.getUserInfo().then((response) => {
+api.getUserInfo().then((response) => {
   const name = response.name;
   const description = response.about;
   updateUserInfo({ name, description });
   currentUserInfo.updateAvatar(response.avatar);
 });
 
-pageInfo.fetchCards().then((data) => {
+api.fetchCards().then((data) => {
   // const { name, link, _id, isLiked } = data;
   cardSection.renderItems(data);
 });
-
-//pageInfo.deleteCard();
