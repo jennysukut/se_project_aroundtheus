@@ -1,7 +1,16 @@
 export default class UserInfo {
-  constructor(profileName, profileDescription) {
-    this._name = document.querySelector(profileName); //remove textContent
+  constructor(
+    profileName,
+    profileDescription,
+    profileAvatar,
+    profileAvatarEdit,
+    avatarImage
+  ) {
+    this._name = document.querySelector(profileName);
     this._description = document.querySelector(profileDescription);
+    this._avatar = document.querySelector(profileAvatar);
+    this._avatarEditButton = document.querySelector(profileAvatarEdit);
+    this._avatarImage = document.querySelector(avatarImage);
   }
 
   getUserInfo() {
@@ -18,13 +27,23 @@ export default class UserInfo {
     this._name.textContent = this._newTitle;
     this._description.textContent = this._newDescription;
   }
-/*
-  setFormInfo(formName, formDetails) {
-    this._formName = document.querySelector(formName);
-    this._formDetails = document.querySelector(formDetails);
-    this._formName.value = this._userInfo.name;
-    this._formDetails.value = this._userInfo.description;
-  }*/
 
-  //setFormInfo should not be in UserInfo. It's about the profile (the form is handled in index.js)
+  updateAvatar(imgLink) {
+    this._avatarImage.src = imgLink;
+  }
+
+  setEventListeners() {
+    this._avatar.addEventListener("mouseover", () => {
+      //DO NOT TOUCH
+      this._avatarEditButton.classList.add("avatar-edit-button-visible");
+      this._avatarImage.classList.add("profile__avatar-shaded");
+    });
+    this._avatar.addEventListener("mouseout", () => {
+      this._avatarEditButton.classList.remove("avatar-edit-button-visible");
+      this._avatarImage.classList.remove("profile__avatar-shaded");
+    });
+    // this._avatarEditButton.addEventListener("click", () => {
+    //   //code here to open the popupModal to change the profile avatar
+    // });
+  }
 }

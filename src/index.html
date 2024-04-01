@@ -25,21 +25,19 @@
       </header>
       <main class="main">
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="Jacques Cousteau"
-            class="profile__avatar"
-          />
+          <div class="profile__avatar-container">
+         
+          <img src="" alt="Profile Avatar" class="profile__avatar" />
+          <button class="avatar-edit-button"></button>
+        </div>
           <div class="profile__info">
-            <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
+            <h1 class="profile__title" id="profile-title"></h1>
             <button
               class="profile__edit-button"
               type="button"
               id="profile-edit-button"
             ></button>
-            <p class="profile__description" id="profile-description">
-              Explorer
-            </p>
+            <p class="profile__description" id="profile-description"></p>
           </div>
           <button
             class="profile__add-button"
@@ -160,8 +158,53 @@
       </div>
     </div>
 
+  </div>
+  <div class="modal" id="delete-confirmation-modal">
+    <div class="modal__container modal__container_delete">
+      <button
+        class="modal__close-button"
+        id="delete-confirmation-modal-close-button"
+      ></button>
+      <p class="modal__heading">Are you sure?</p>
+          <button class="modal__button modal__button-delete" id="delete-confirmation-button">
+            Yes
+          </button>
+    </div>
+  </div>
+
+</div>
+<div class="modal" id="edit-avatar-modal">
+  <div class="modal__container">
+    <button
+      class="modal__close-button"
+      id="edit-avatar-modal-close-button"
+    ></button>
+    <p class="modal__heading">Change profile picture</p>
+    <form class="modal__form" name="edit-avatar-form" id="edit-avatar-form">
+      <fieldset class="modal__form-fieldset">
+        <input
+          type="url"
+          class="modal__form-input modal__form-input-avatar"
+          id="edit-avatar-modal-link"
+          name="link"
+          placeholder="Image link"
+          required
+        />
+        <span class="modal__error" id="edit-avatar-modal-link-error"></span>
+        <button
+          class="modal__button modal__button-avatar modal__button_disabled"
+          id="edit-avatar-modal-button"
+          disabled
+        >
+          Save
+        </button>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
     <template id="cards-template">
-      <li class="card">
+      <li class="card" id="">
         <div class="card__image">
           <img src="" alt="" id="card-image" class="card__image" />
           <button

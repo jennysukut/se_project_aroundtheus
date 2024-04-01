@@ -1,9 +1,10 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor(handleFormSubmit, popup) {
+  constructor(handleFormSubmit, popup, submitButton) {
     super(popup);
     this._handleFormSubmit = handleFormSubmit;
+    this._submitButton = document.querySelector(submitButton);
   }
 
   _getInputValues() {
@@ -18,11 +19,11 @@ export default class PopupWithForm extends Popup {
     return this.formValues;
   }
 
-  setEventListeners() {
+  setEventListeners(processingMessage) {
     this._popupElement.addEventListener("submit", (evt) => {
       this._getInputValues();
       this._handleFormSubmit(evt);
-      this.resetForm();
+      this.setProcessingMessage(processingMessage);
     });
     super.setEventListeners();
   }
@@ -30,5 +31,21 @@ export default class PopupWithForm extends Popup {
   resetForm() {
     this._form = this._popupElement.querySelector(".modal__form");
     this._form.reset();
+  }
+
+  renderLoading(loadingText) {
+    if (true) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      console.log("this button should be regular now");
+    }
+  }
+
+  setProcessingMessage(text) {
+    this._submitButton.textContent = text;
+  }
+
+  removeProcessingMessage(text) {
+    this._submitButton.textContent = text;
   }
 }
